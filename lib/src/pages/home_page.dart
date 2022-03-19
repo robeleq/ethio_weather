@@ -29,9 +29,9 @@ class _HomePageState extends State<HomePage>
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: lBackgroundColor,
-        selectedItemColor: lPrimaryTextColor,
-        unselectedItemColor: lPrimaryTextColor.withOpacity(.60),
+        backgroundColor: primaryColor,
+        selectedItemColor: primaryTextColor,
+        unselectedItemColor: primaryTextColor.withOpacity(.60),
         selectedFontSize: 14,
         unselectedFontSize: 14,
         onTap: _onTap,
