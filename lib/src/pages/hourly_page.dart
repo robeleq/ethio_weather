@@ -38,7 +38,8 @@ class _HourlyPageState extends State<HourlyPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const <Widget>[
                         Expanded(
-                          child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 8.0),
                             child: Text(
                               "2 PM",
                               style: TextStyle(fontSize: 16.0),
@@ -102,7 +103,7 @@ class _HourlyPageState extends State<HourlyPage> {
                           children: <Widget>[
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(2.0),
+                                padding: const EdgeInsets.all(4.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
@@ -137,7 +138,7 @@ class _HourlyPageState extends State<HourlyPage> {
                             ),
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
+                                padding: const EdgeInsets.all(4.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
@@ -172,13 +173,14 @@ class _HourlyPageState extends State<HourlyPage> {
                             )
                           ],
                         ),
+                        const Divider(height: 1),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
+                                padding: const EdgeInsets.all(4.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
@@ -213,7 +215,7 @@ class _HourlyPageState extends State<HourlyPage> {
                             ),
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
+                                padding: const EdgeInsets.all(4.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
@@ -264,7 +266,8 @@ class _HourlyPageState extends State<HourlyPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const <Widget>[
                         Expanded(
-                          child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 8.0),
                             child: Text(
                               "3 PM",
                               style: TextStyle(fontSize: 16.0),
@@ -328,7 +331,7 @@ class _HourlyPageState extends State<HourlyPage> {
                           children: <Widget>[
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(2.0),
+                                padding: const EdgeInsets.all(4.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
@@ -363,7 +366,7 @@ class _HourlyPageState extends State<HourlyPage> {
                             ),
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
+                                padding: const EdgeInsets.all(4.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
@@ -398,13 +401,14 @@ class _HourlyPageState extends State<HourlyPage> {
                             )
                           ],
                         ),
+                        const Divider(height: 1.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
+                                padding: const EdgeInsets.all(4.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
@@ -439,7 +443,7 @@ class _HourlyPageState extends State<HourlyPage> {
                             ),
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
+                                padding: const EdgeInsets.all(4.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
