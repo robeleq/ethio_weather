@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_icons/weather_icons.dart';
 
+import '../providers/providers.dart';
 import '../styles/colors.dart';
 
-class TodayPage extends StatefulWidget {
+class TodayPage extends ConsumerStatefulWidget {
   final String title;
 
   const TodayPage({Key? key, required this.title}) : super(key: key);
 
   @override
-  State<TodayPage> createState() => _TodayPageState();
+  ConsumerState<TodayPage> createState() => _TodayPageState();
 }
 
-class _TodayPageState extends State<TodayPage> {
+class _TodayPageState extends ConsumerState<TodayPage> with TickerProviderStateMixin<TodayPage> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = ref.watch(themeChangeNotifierProvider);
+    final _theme = themeProvider.getCurrentTheme();
+
+    final Color _titleColor = _theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
+
     const dynamic tempMin = 10;
     const dynamic tempMax = 21;
 
@@ -89,16 +96,16 @@ class _TodayPageState extends State<TodayPage> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
-                                  children: const <Widget>[
+                                  children: <Widget>[
                                     BoxedIcon(
                                       WeatherIcons.day_cloudy,
-                                      color: primaryTextColor,
+                                      color: _theme.iconTheme.color,
                                       size: 32.0,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 8.0,
                                     ),
-                                    Text(
+                                    const Text(
                                       "$tempMax °C",
                                       style: TextStyle(fontSize: 24.0),
                                     ),
@@ -158,20 +165,20 @@ class _TodayPageState extends State<TodayPage> {
                             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const <Widget>[
+                              children: <Widget>[
                                 BoxedIcon(
                                   WeatherIcons.humidity,
-                                  color: primaryTextColor,
+                                  color: _theme.iconTheme.color,
                                   size: 32.0,
                                 ),
-                                Text(
+                                const Text(
                                   "Humidity",
                                   style: TextStyle(fontSize: 14.0),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 8,
                                 ),
-                                Text(
+                                const Text(
                                   "21%",
                                   style: TextStyle(fontSize: 14.0),
                                 ),
@@ -194,20 +201,20 @@ class _TodayPageState extends State<TodayPage> {
                             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const <Widget>[
+                              children: <Widget>[
                                 BoxedIcon(
                                   WeatherIcons.sunrise,
-                                  color: primaryTextColor,
+                                  color: _theme.iconTheme.color,
                                   size: 32.0,
                                 ),
-                                Text(
+                                const Text(
                                   "UV",
                                   style: TextStyle(fontSize: 14.0),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 8,
                                 ),
-                                Text(
+                                const Text(
                                   "6 of 10",
                                   style: TextStyle(fontSize: 14.0),
                                 ),
@@ -231,20 +238,20 @@ class _TodayPageState extends State<TodayPage> {
                             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const <Widget>[
+                              children: <Widget>[
                                 WindIcon(
                                   degree: 45,
-                                  color: primaryTextColor,
+                                  color: _theme.iconTheme.color,
                                   size: 32.0,
                                 ),
-                                Text(
+                                const Text(
                                   "Wind",
                                   style: TextStyle(fontSize: 14.0),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 8,
                                 ),
-                                Text(
+                                const Text(
                                   "14 Km/h",
                                   style: TextStyle(fontSize: 14.0),
                                 ),
@@ -283,9 +290,9 @@ class _TodayPageState extends State<TodayPage> {
                               const SizedBox(
                                 height: 4.0,
                               ),
-                              const BoxedIcon(
+                              BoxedIcon(
                                 WeatherIcons.day_cloudy,
-                                color: primaryTextColor,
+                                color: _theme.iconTheme.color,
                                 size: 24.0,
                               ),
                               const SizedBox(
@@ -327,9 +334,9 @@ class _TodayPageState extends State<TodayPage> {
                               const SizedBox(
                                 height: 4.0,
                               ),
-                              const BoxedIcon(
+                              BoxedIcon(
                                 WeatherIcons.day_cloudy,
-                                color: primaryTextColor,
+                                color: _theme.iconTheme.color,
                                 size: 24.0,
                               ),
                               const SizedBox(
@@ -371,9 +378,9 @@ class _TodayPageState extends State<TodayPage> {
                               const SizedBox(
                                 height: 4.0,
                               ),
-                              const BoxedIcon(
+                              BoxedIcon(
                                 WeatherIcons.day_cloudy,
-                                color: primaryTextColor,
+                                color: _theme.iconTheme.color,
                                 size: 24.0,
                               ),
                               const SizedBox(
@@ -415,9 +422,9 @@ class _TodayPageState extends State<TodayPage> {
                               const SizedBox(
                                 height: 4.0,
                               ),
-                              const BoxedIcon(
+                              BoxedIcon(
                                 WeatherIcons.day_cloudy,
-                                color: primaryTextColor,
+                                color: _theme.iconTheme.color,
                                 size: 24.0,
                               ),
                               const SizedBox(
@@ -459,9 +466,9 @@ class _TodayPageState extends State<TodayPage> {
                               const SizedBox(
                                 height: 4.0,
                               ),
-                              const BoxedIcon(
+                              BoxedIcon(
                                 WeatherIcons.day_cloudy,
-                                color: primaryTextColor,
+                                color: _theme.iconTheme.color,
                                 size: 24.0,
                               ),
                               const SizedBox(

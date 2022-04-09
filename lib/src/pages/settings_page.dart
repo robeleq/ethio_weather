@@ -1,34 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:weather_icons/weather_icons.dart';
 
+import '../providers/providers.dart';
 import '../styles/colors.dart';
+import '../styles/theme_scheme.dart';
 import '../widgets/settings_tile.dart';
 
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends ConsumerStatefulWidget {
   final String title;
 
   const SettingsPage({Key? key, required this.title}) : super(key: key);
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  ConsumerState<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMixin<SettingsPage> {
+class _SettingsPageState extends ConsumerState<SettingsPage> with TickerProviderStateMixin<SettingsPage> {
   final String _selectedLanguage = "English";
   bool _isThemeDark = false;
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData _theme = Theme.of(context);
-    final Color _backgroundColor = _theme.brightness == Brightness.light ? primaryLightColor : secondaryLightColor;
-    final Color _textColor = _theme.brightness == Brightness.light ? Colors.black : Colors.white;
-    final Color _subtitleColor = _theme.brightness == Brightness.light ? Colors.black54 : Colors.white60;
+    final themeProvider = ref.watch(themeChangeNotifierProvider);
+    final _theme = themeProvider.getCurrentTheme();
+
+    final Color _titleColor = _theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
+
+    setState(() {
+      _isThemeDark = Theme.of(context).brightness == Brightness.light ? false : true;
+    });
 
     return SafeArea(
         child: SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(16.0),
+        color: _theme.backgroundColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -45,7 +53,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
               subtitle: _selectedLanguage,
               leading: Icon(
                 Icons.language,
-                color: _textColor,
+                color: _theme.iconTheme.color,
               ),
               onTap: () {},
             ),
@@ -63,15 +71,17 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
               title: "Dark Theme",
               leading: Icon(
                 Icons.palette,
-                color: _textColor,
+                color: _theme.iconTheme.color,
               ),
               switchValue: _isThemeDark,
               onToggle: (bool value) {
                 setState(() {
                   if (!value) {
                     _isThemeDark = false;
+                    themeProvider.setTheme(ThemeScheme.lightTheme());
                   } else {
                     _isThemeDark = true;
+                    themeProvider.setTheme(ThemeScheme.darkTheme());
                   }
                 });
               },
@@ -80,7 +90,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
               height: 8.0,
             ),
             Text(
-              "Units".toUpperCase(),
+              "Unit".toUpperCase(),
               style: _theme.textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w700),
             ),
             const SizedBox(
@@ -91,7 +101,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
               subtitle: "°C",
               leading: BoxedIcon(
                 WeatherIcons.thermometer,
-                color: _textColor,
+                color: _theme.iconTheme.color,
               ),
               onTap: () {},
             ),
@@ -107,7 +117,10 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
             ),
             SettingsTile(
               title: "Version",
-              leading: FaIcon(FontAwesomeIcons.codeBranch, color: _textColor),
+              leading: FaIcon(
+                FontAwesomeIcons.codeBranch,
+                color: _theme.iconTheme.color,
+              ),
               subtitle: "v0.0.1",
             ),
             Divider(
@@ -118,7 +131,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
               title: "Share",
               leading: Icon(
                 Icons.share,
-                color: _textColor,
+                color: _theme.iconTheme.color,
               ),
               onTap: () {},
             ),
@@ -136,7 +149,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
               title: "Terms of Use",
               leading: Icon(
                 Icons.description,
-                color: _textColor,
+                color: _theme.iconTheme.color,
               ),
               onTap: () {},
             ),
@@ -148,7 +161,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
               title: "Open Source Licenses",
               leading: Icon(
                 Icons.collections_bookmark,
-                color: _textColor,
+                color: _theme.iconTheme.color,
               ),
               onTap: () {},
             ),

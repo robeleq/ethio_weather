@@ -58,7 +58,7 @@ class _HourlyPageState extends State<HourlyPage> {
                           child: Center(
                             child: BoxedIcon(
                               WeatherIcons.day_cloudy,
-                              color: primaryTextColor,
+                              color: lSecondaryLightColor,
                               size: 24.0,
                             ),
                           ),
@@ -286,7 +286,7 @@ class _HourlyPageState extends State<HourlyPage> {
                           child: Center(
                             child: BoxedIcon(
                               WeatherIcons.day_cloudy,
-                              color: primaryTextColor,
+                              color: lSecondaryLightColor,
                               size: 24.0,
                             ),
                           ),

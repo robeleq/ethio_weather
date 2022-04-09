@@ -58,7 +58,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                           child: Center(
                             child: BoxedIcon(
                               WeatherIcons.day_cloudy,
-                              color: primaryTextColor,
+                              color: lSecondaryLightColor,
                               size: 24.0,
                             ),
                           ),
@@ -98,7 +98,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                             ),
                             BoxedIcon(
                               WeatherIcons.day_cloudy,
-                              color: primaryTextColor,
+                              color: lSecondaryLightColor,
                               size: 24.0,
                             )
                           ],
@@ -112,7 +112,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                                 children: const <Widget>[
                                   BoxedIcon(
                                     WeatherIcons.raindrops,
-                                    color: primaryTextColor,
+                                    color: lSecondaryLightColor,
                                     size: 16.0,
                                   ),
                                   SizedBox(
@@ -130,7 +130,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                                 children: const <Widget>[
                                   BoxedIcon(
                                     WeatherIcons.wind_beaufort_0,
-                                    color: primaryTextColor,
+                                    color: lSecondaryLightColor,
                                     size: 16.0,
                                   ),
                                   SizedBox(
@@ -264,7 +264,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                             ),
                             BoxedIcon(
                               WeatherIcons.night_alt_cloudy,
-                              color: primaryTextColor,
+                              color: lSecondaryLightColor,
                               size: 24.0,
                             )
                           ],
@@ -278,7 +278,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                                 children: const <Widget>[
                                   BoxedIcon(
                                     WeatherIcons.raindrops,
-                                    color: primaryTextColor,
+                                    color: lSecondaryLightColor,
                                     size: 16.0,
                                   ),
                                   SizedBox(
@@ -296,7 +296,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                                 children: const <Widget>[
                                   BoxedIcon(
                                     WeatherIcons.wind_beaufort_0,
-                                    color: primaryTextColor,
+                                    color: lSecondaryLightColor,
                                     size: 16.0,
                                   ),
                                   SizedBox(
@@ -442,7 +442,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                           child: Center(
                             child: BoxedIcon(
                               WeatherIcons.day_sunny,
-                              color: primaryTextColor,
+                              color: lSecondaryLightColor,
                               size: 24.0,
                             ),
                           ),
@@ -482,7 +482,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                             ),
                             BoxedIcon(
                               WeatherIcons.day_sunny,
-                              color: primaryTextColor,
+                              color: lSecondaryLightColor,
                               size: 24.0,
                             )
                           ],
@@ -496,7 +496,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                                 children: const <Widget>[
                                   BoxedIcon(
                                     WeatherIcons.raindrops,
-                                    color: primaryTextColor,
+                                    color: lSecondaryLightColor,
                                     size: 16.0,
                                   ),
                                   SizedBox(
@@ -514,7 +514,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                                 children: const <Widget>[
                                   BoxedIcon(
                                     WeatherIcons.wind_beaufort_0,
-                                    color: primaryTextColor,
+                                    color: lSecondaryLightColor,
                                     size: 16.0,
                                   ),
                                   SizedBox(
@@ -648,7 +648,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                             ),
                             BoxedIcon(
                               WeatherIcons.night_alt_cloudy,
-                              color: primaryTextColor,
+                              color: lSecondaryLightColor,
                               size: 24.0,
                             )
                           ],
@@ -662,7 +662,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                                 children: const <Widget>[
                                   BoxedIcon(
                                     WeatherIcons.raindrops,
-                                    color: primaryTextColor,
+                                    color: lSecondaryLightColor,
                                     size: 16.0,
                                   ),
                                   SizedBox(
@@ -680,7 +680,7 @@ class _WeeklyPageState extends State<WeeklyPage> {
                                 children: const <Widget>[
                                   BoxedIcon(
                                     WeatherIcons.wind_beaufort_0,
-                                    color: primaryTextColor,
+                                    color: lSecondaryLightColor,
                                     size: 16.0,
                                   ),
                                   SizedBox(
