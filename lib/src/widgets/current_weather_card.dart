@@ -1,4 +1,6 @@
+import 'package:basic_utils/basic_utils.dart';
 import 'package:ethio_weather/src/models/current_weather.dart';
+import 'package:ethio_weather/src/models/daily_forecast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,8 +11,9 @@ import '../providers/providers.dart';
 
 class CurrentWeatherCard extends ConsumerWidget {
   final CurrentWeather _currentWeather;
+  final DailyForecast _todayWeather;
 
-  const CurrentWeatherCard(this._currentWeather, {Key? key}) : super(key: key);
+  const CurrentWeatherCard(this._currentWeather, this._todayWeather, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -95,21 +98,21 @@ class CurrentWeatherCard extends ConsumerWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                "${_currentWeather.weather?[0].description}",
+                                StringUtils.capitalize("${_currentWeather.weather?[0].description}", allWords: true),
                                 style: const TextStyle(fontSize: 12.0),
                               ),
                               const SizedBox(
                                 height: 4.0,
                               ),
-                              const Text(
-                                "12° / 15°",
-                                style: TextStyle(fontSize: 12.0),
+                              Text(
+                                "${_todayWeather.temp?.min} °C / ${_todayWeather.temp?.max} °C",
+                                style: const TextStyle(fontSize: 12.0),
                               ),
                               const SizedBox(
                                 height: 4.0,
                               ),
                               Text(
-                                "Feels like ${_currentWeather.feelsLike}°",
+                                "Feels like ${_currentWeather.feelsLike} °C",
                                 style: const TextStyle(fontSize: 12.0),
                               ),
                             ],
@@ -154,9 +157,9 @@ class CurrentWeatherCard extends ConsumerWidget {
                           const SizedBox(
                             height: 8,
                           ),
-                          const Text(
-                            "0.20",
-                            style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
+                          Text(
+                            "${_todayWeather.pop! * 100}",
+                            style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -191,7 +194,7 @@ class CurrentWeatherCard extends ConsumerWidget {
                             height: 8,
                           ),
                           Text(
-                            "${_currentWeather.humidity}",
+                            "${_todayWeather.humidity} %",
                             style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -216,7 +219,7 @@ class CurrentWeatherCard extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           WindIcon(
-                            degree: _currentWeather.windDeg as num,
+                            degree: num.parse("${_todayWeather.windDeg}"),
                             color: _theme.iconTheme.color,
                             size: 24.0,
                           ),
@@ -228,7 +231,7 @@ class CurrentWeatherCard extends ConsumerWidget {
                             height: 8,
                           ),
                           Text(
-                            "${_currentWeather.windSpeed}",
+                            "${_todayWeather.windSpeed} m/s",
                             style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -272,7 +275,7 @@ class CurrentWeatherCard extends ConsumerWidget {
                             height: 8,
                           ),
                           Text(
-                            "${_currentWeather.pressure}",
+                            "${_todayWeather.pressure} hPa",
                             style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -311,7 +314,7 @@ class CurrentWeatherCard extends ConsumerWidget {
                             height: 8,
                           ),
                           Text(
-                            "${_currentWeather.visibility}",
+                            "${_currentWeather.visibility! / 1000} km",
                             style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -350,7 +353,7 @@ class CurrentWeatherCard extends ConsumerWidget {
                             height: 8,
                           ),
                           Text(
-                            "${_currentWeather.uvi}",
+                            "${_todayWeather.uvi}",
                             style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
                           ),
                         ],
