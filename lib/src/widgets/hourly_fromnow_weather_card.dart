@@ -31,29 +31,30 @@ class HourlyFromNowWeatherCard extends ConsumerWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              ..._hourlyForecast!.map((element) => ((element.dt! * 1000) < _hoursFromNow!)
+              ..._hourlyForecast!.map((hourly) => ((hourly.dt! * 1000) < _hoursFromNow!)
                   ? Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
-                            DateFormat('hh:mm a').format(DateTime.fromMillisecondsSinceEpoch(element.dt! * 1000)),
+                            DateFormat('hh:mm a').format(DateTime.fromMillisecondsSinceEpoch(hourly.dt! * 1000)),
                             style: const TextStyle(fontSize: 12.0),
                           ),
                           const SizedBox(
                             height: 4.0,
                           ),
-                          BoxedIcon(
-                            WeatherIcons.day_cloudy,
-                            color: _theme.iconTheme.color,
-                            size: 24.0,
+                          Image.asset(
+                            'assets/images/icons/${hourly.weather?[0].icon}@2x.png',
+                            height: 32,
+                            width: 32,
+                            fit: BoxFit.fitWidth,
                           ),
                           const SizedBox(
                             height: 4.0,
                           ),
                           Text(
-                            "${element.temp}°C",
+                            "${hourly.temp}°C",
                             style: const TextStyle(fontSize: 12.0),
                           ),
                           const SizedBox(
@@ -68,7 +69,7 @@ class HourlyFromNowWeatherCard extends ConsumerWidget {
                                 size: 10.0,
                               ),
                               Text(
-                                "${element.humidity}%",
+                                "${hourly.humidity}%",
                                 style: const TextStyle(fontSize: 12.0),
                               ),
                             ],

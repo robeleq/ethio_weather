@@ -76,17 +76,18 @@ class CurrentWeatherCard extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              BoxedIcon(
-                                WeatherIcons.day_cloudy,
-                                color: _theme.iconTheme.color,
-                                size: 32.0,
+                              Image.asset(
+                                'assets/images/icons/${_currentWeather.weather?[0].icon}@2x.png',
+                                height: 56,
+                                width: 56,
+                                fit: BoxFit.fitWidth,
                               ),
                               const SizedBox(
                                 width: 8.0,
                               ),
                               Text(
                                 "${_currentWeather.temp} °C",
-                                style: const TextStyle(fontSize: 24.0),
+                                style: const TextStyle(fontSize: 22.0),
                               ),
                             ],
                           ),
