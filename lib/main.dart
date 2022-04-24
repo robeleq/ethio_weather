@@ -1,4 +1,5 @@
 import 'package:ethio_weather/src/app.dart';
+import 'package:ethio_weather/src/services/location_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -8,10 +9,13 @@ import 'src/providers/providers.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final hasInternetConnection = await InternetConnectionChecker().hasConnection;
+  final userLocation = await LocationService().getUserCurrentLocation();
+
   runApp(ProviderScope(
     overrides: [
       // override the previous value with the new object
       hasInternetConnectionProvider.overrideWithValue(hasInternetConnection),
+      userLocationProvider.overrideWithValue(userLocation),
     ],
     child: const EthioWeatherApp(),
   ));

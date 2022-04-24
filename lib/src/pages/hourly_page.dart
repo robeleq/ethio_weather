@@ -277,6 +277,8 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
 
     final _internetConnected = ref.watch(connectionStateProvider);
 
+    final _userLocation = ref.watch(userLocationProvider);
+
     final Color _titleColor = _theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
 
     final hoursFromNow = DateTime.now().add(const Duration(hours: 11));
@@ -285,7 +287,14 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
     // Reloads the weather data when connection is available
     if (_internetConnected) {
       if (_hourlyItems.isEmpty) {
-        ref.read(openWeatherMapNotifierProvider.notifier).getWeather(Config.apiOneCallUrl.toString());
+        final apiOneCallUrl = Uri.https(Config.apiBaseUrl, 'data/2.5/onecall', {
+          'lat': _userLocation.latitude.toString(),
+          'lon': _userLocation.longitude.toString(),
+          'appid': Config.appId,
+          'units': 'metric',
+          'lang': 'en',
+        });
+        ref.read(openWeatherMapNotifierProvider.notifier).getWeather(apiOneCallUrl.toString());
 
         final _openWeatherMap = ref.watch(openWeatherMapNotifierProvider);
 

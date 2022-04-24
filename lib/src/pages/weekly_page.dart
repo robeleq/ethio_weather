@@ -486,12 +486,21 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
 
     final _internetConnected = ref.watch(connectionStateProvider);
 
+    final _userLocation = ref.watch(userLocationProvider);
+
     final Color _titleColor = _theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
 
     // Reloads the weather data when connection is available
     if (_internetConnected) {
       if (_dailyForecastItems.isEmpty) {
-        ref.read(openWeatherMapNotifierProvider.notifier).getWeather(Config.apiOneCallUrl.toString());
+        final apiOneCallUrl = Uri.https(Config.apiBaseUrl, 'data/2.5/onecall', {
+          'lat': _userLocation.latitude.toString(),
+          'lon': _userLocation.longitude.toString(),
+          'appid': Config.appId,
+          'units': 'metric',
+          'lang': 'en',
+        });
+        ref.read(openWeatherMapNotifierProvider.notifier).getWeather(apiOneCallUrl.toString());
 
         final _openWeatherMap = ref.watch(openWeatherMapNotifierProvider);
 

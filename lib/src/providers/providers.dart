@@ -4,6 +4,7 @@ import 'package:ethio_weather/src/providers/theme_notifier.dart';
 import 'package:ethio_weather/src/providers/weather_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../models/lat_lng.dart';
 import '../services/weather_repository.dart';
 
 final themeChangeNotifierProvider = ChangeNotifierProvider((ref) {
@@ -20,10 +21,16 @@ final connectionStateProvider = StateNotifierProvider<ConnectionNotifier, bool>(
   return ConnectionNotifier(hasInternetConnection);
 });
 
-final openWeatherMapRepositoryProvider = Provider<WeatherRepository>(
-  (ref) => OpenWeatherMapRepository(),
-);
+final userLocationProvider = Provider<LatLng>((ref) {
+  throw UnimplementedError();
+});
+
+final openWeatherMapRepositoryProvider = Provider<WeatherRepository>((ref) {
+  return OpenWeatherMapRepository();
+});
 
 final openWeatherMapNotifierProvider = StateNotifierProvider<OpenWeatherMapNotifier, OpenWeatherMap>((ref) {
-  return OpenWeatherMapNotifier(ref.watch(openWeatherMapRepositoryProvider));
+  final userLocation = ref.watch(userLocationProvider);
+  final openWeatherMapRepository = ref.watch(openWeatherMapRepositoryProvider);
+  return OpenWeatherMapNotifier(openWeatherMapRepository, userLocation);
 });
