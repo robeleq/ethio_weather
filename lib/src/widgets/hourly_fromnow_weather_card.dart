@@ -12,6 +12,54 @@ class HourlyFromNowWeatherCard extends ConsumerWidget {
 
   const HourlyFromNowWeatherCard(this._hourlyForecast, this._hoursFromNow, {Key? key}) : super(key: key);
 
+  Expanded _buildHourlyItem(HourlyForecast hourly) {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            DateFormat('hh:mm a').format(DateTime.fromMillisecondsSinceEpoch(hourly.dt! * 1000)),
+            style: const TextStyle(fontSize: 12.0),
+          ),
+          const SizedBox(
+            height: 4.0,
+          ),
+          Image.asset(
+            'assets/images/icons/${hourly.weather?[0].icon}@2x.png',
+            height: 32,
+            width: 32,
+            fit: BoxFit.fitWidth,
+          ),
+          const SizedBox(
+            height: 4.0,
+          ),
+          Text(
+            "${hourly.temp}°C",
+            style: const TextStyle(fontSize: 12.0),
+          ),
+          const SizedBox(
+            height: 4.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const BoxedIcon(
+                WeatherIcons.humidity,
+                color: Colors.blueAccent,
+                size: 10.0,
+              ),
+              Text(
+                "${hourly.humidity}%",
+                style: const TextStyle(fontSize: 12.0),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeProvider = ref.watch(themeChangeNotifierProvider);
@@ -30,55 +78,10 @@ class HourlyFromNowWeatherCard extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              ..._hourlyForecast!.map((hourly) => ((hourly.dt! * 1000) < _hoursFromNow!)
-                  ? Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            DateFormat('hh:mm a').format(DateTime.fromMillisecondsSinceEpoch(hourly.dt! * 1000)),
-                            style: const TextStyle(fontSize: 12.0),
-                          ),
-                          const SizedBox(
-                            height: 4.0,
-                          ),
-                          Image.asset(
-                            'assets/images/icons/${hourly.weather?[0].icon}@2x.png',
-                            height: 32,
-                            width: 32,
-                            fit: BoxFit.fitWidth,
-                          ),
-                          const SizedBox(
-                            height: 4.0,
-                          ),
-                          Text(
-                            "${hourly.temp}°C",
-                            style: const TextStyle(fontSize: 12.0),
-                          ),
-                          const SizedBox(
-                            height: 4.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              const BoxedIcon(
-                                WeatherIcons.humidity,
-                                color: Colors.blueAccent,
-                                size: 10.0,
-                              ),
-                              Text(
-                                "${hourly.humidity}%",
-                                style: const TextStyle(fontSize: 12.0),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container())
-            ],
+            children: _hourlyForecast!
+                .where((hourly) => ((hourly.dt! * 1000) < _hoursFromNow!))
+                .map((hourly) => _buildHourlyItem(hourly))
+                .toList(),
           ),
         ),
       ),

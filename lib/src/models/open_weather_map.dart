@@ -32,22 +32,4 @@ class OpenWeatherMap {
       });
     }
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['lat'] = this.lat;
-    data['lon'] = this.lon;
-    data['timezone'] = this.timezone;
-    data['timezone_offset'] = this.timezoneOffset;
-    if (this.current != null) {
-      data['current'] = this.current!.toJson();
-    }
-    if (this.hourly != null) {
-      data['hourly'] = this.hourly!.map((v) => v.toJson()).toList();
-    }
-    if (this.daily != null) {
-      data['daily'] = this.daily!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
 }

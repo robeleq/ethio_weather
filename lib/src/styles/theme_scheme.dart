@@ -26,19 +26,20 @@ class ThemeScheme {
 
   static ThemeData darkTheme() {
     return ThemeData(
-        brightness: Brightness.dark,
-        fontFamily: 'Poppins',
-        primaryColor: dPrimaryDarkColor,
-        scaffoldBackgroundColor: dPrimaryBackgroundColor,
-        backgroundColor: dPrimaryBackgroundColor,
-        focusColor: dPrimaryTextColor,
-        primarySwatch: Colors.blue,
-        appBarTheme: const AppBarTheme(
-          iconTheme: IconThemeData(color: dPrimaryDarkColor),
-        ),
-        inputDecorationTheme:
-            const InputDecorationTheme(border: OutlineInputBorder(borderSide: BorderSide(color: dSecondaryDarkColor))),
-        iconTheme: const IconThemeData(color: dPrimaryLightColor),
-        cardTheme: const CardTheme(color: dSecondaryDarkColor));
+      brightness: Brightness.dark,
+      fontFamily: 'Poppins',
+      primaryColor: dPrimaryDarkColor,
+      scaffoldBackgroundColor: dPrimaryBackgroundColor,
+      backgroundColor: dPrimaryBackgroundColor,
+      focusColor: dPrimaryTextColor,
+      primarySwatch: Colors.blue,
+      appBarTheme: const AppBarTheme(
+        iconTheme: IconThemeData(color: dPrimaryDarkColor),
+      ),
+      inputDecorationTheme:
+          const InputDecorationTheme(border: OutlineInputBorder(borderSide: BorderSide(color: dSecondaryDarkColor))),
+      iconTheme: const IconThemeData(color: dPrimaryLightColor),
+      cardTheme: const CardTheme(color: dSecondaryDarkColor),
+    );
   }
 }

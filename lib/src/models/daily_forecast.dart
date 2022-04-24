@@ -70,34 +70,4 @@ class DailyForecast {
     rain = json["rain"] is int ? (json['rain'] as int).toDouble() : json['rain'];
     uvi = json["uvi"] is int ? (json['uvi'] as int).toDouble() : json['uvi'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['dt'] = this.dt;
-    data['sunrise'] = this.sunrise;
-    data['sunset'] = this.sunset;
-    data['moonrise'] = this.moonrise;
-    data['moonset'] = this.moonset;
-    data['moon_phase'] = this.moonPhase;
-    if (this.temp != null) {
-      data['temp'] = this.temp!.toJson();
-    }
-    if (this.feelsLike != null) {
-      data['feels_like'] = this.feelsLike!.toJson();
-    }
-    data['pressure'] = this.pressure;
-    data['humidity'] = this.humidity;
-    data['dew_point'] = this.dewPoint;
-    data['wind_speed'] = this.windSpeed;
-    data['wind_deg'] = this.windDeg;
-    data['wind_gust'] = this.windGust;
-    if (this.weather != null) {
-      data['weather'] = this.weather!.map((v) => v.toJson()).toList();
-    }
-    data['clouds'] = this.clouds;
-    data['pop'] = this.pop;
-    data['rain'] = this.rain;
-    data['uvi'] = this.uvi;
-    return data;
-  }
 }

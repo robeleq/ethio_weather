@@ -57,28 +57,4 @@ class HourlyForecast {
     pop = json["pop"] is int ? (json['pop'] as int).toDouble() : json['pop'];
     rain = json['rain'] != null ? Rain.fromJson(json['rain']) : null;
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['dt'] = this.dt;
-    data['temp'] = this.temp;
-    data['feels_like'] = this.feelsLike;
-    data['pressure'] = this.pressure;
-    data['humidity'] = this.humidity;
-    data['dew_point'] = this.dewPoint;
-    data['uvi'] = this.uvi;
-    data['clouds'] = this.clouds;
-    data['visibility'] = this.visibility;
-    data['wind_speed'] = this.windSpeed;
-    data['wind_deg'] = this.windDeg;
-    data['wind_gust'] = this.windGust;
-    if (this.weather != null) {
-      data['weather'] = this.weather!.map((v) => v.toJson()).toList();
-    }
-    data['pop'] = this.pop;
-    if (this.rain != null) {
-      data['rain'] = this.rain!.toJson();
-    }
-    return data;
-  }
 }

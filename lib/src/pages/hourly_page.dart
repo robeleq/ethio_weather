@@ -1,12 +1,15 @@
 import 'package:basic_utils/basic_utils.dart';
+import 'package:ethio_weather/src/models/open_weather_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_icons/weather_icons.dart';
 
+import '../config.dart';
 import '../models/hourly_forecast.dart';
 import '../providers/providers.dart';
 import '../styles/colors.dart';
+import '../widgets/no_internet_connection_card.dart';
 
 class HourlyPage extends ConsumerStatefulWidget {
   final String title;
@@ -24,26 +27,21 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
   void initState() {
     super.initState();
 
-    final _openWeatherMapData = ref.read(openWeatherMapDataProvider);
+    final _openWeatherMap = ref.read(openWeatherMapNotifierProvider);
 
-    _openWeatherMapData.whenData(
-      (value) => _hourlyItems = List<HourlyItem>.generate(
-        value.hourly!.length,
-        (int index) {
-          return HourlyItem(
-            hourly: value.hourly![index],
-          );
-        },
-      ),
-    );
+    if (_openWeatherMap.hourly != null) {
+      _hourlyItems = generateHourlyForecastItem(_openWeatherMap);
+    }
   }
 
   ExpansionPanel _buildExpansionPanel(HourlyItem hourlyItem, ThemeData _theme) {
     return ExpansionPanel(
       canTapOnHeader: true,
+      backgroundColor: _theme.brightness == Brightness.dark ? dSecondaryDarkColor : lSecondaryLightColor,
       headerBuilder: (context, isExpanded) {
         return Container(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            decoration: const BoxDecoration(color: Colors.transparent),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -277,24 +275,60 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
     final themeProvider = ref.watch(themeChangeNotifierProvider);
     final _theme = themeProvider.getCurrentTheme();
 
+    final _internetConnected = ref.watch(connectionStateProvider);
+
     final Color _titleColor = _theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
 
-    if (_hourlyItems.isNotEmpty) {
-      return SingleChildScrollView(
-        child: ExpansionPanelList(
-          elevation: 3,
-          animationDuration: const Duration(milliseconds: 600),
-          expansionCallback: (index, isExpanded) {
-            setState(() {
-              _hourlyItems[index].isExpanded = !isExpanded;
-            });
-          },
-          children: _hourlyItems.map((hourlyItem) => _buildExpansionPanel(hourlyItem, _theme)).toList(),
-        ),
-      );
-    } else {
-      return const CircularProgressIndicator(); // loading
+    final hoursFromNow = DateTime.now().add(const Duration(hours: 11));
+    final unixTimestampHoursFromNow = hoursFromNow.toUtc().millisecondsSinceEpoch;
+
+    // Reloads the weather data when connection is available
+    if (_internetConnected) {
+      if (_hourlyItems.isEmpty) {
+        ref.read(openWeatherMapNotifierProvider.notifier).getWeather(Config.apiOneCallUrl.toString());
+
+        final _openWeatherMap = ref.watch(openWeatherMapNotifierProvider);
+
+        if (_openWeatherMap.hourly != null) {
+          _hourlyItems = generateHourlyForecastItem(_openWeatherMap);
+        }
+      }
     }
+
+    return _internetConnected
+        ? Center(
+            child: SingleChildScrollView(
+              child: (_hourlyItems.isNotEmpty)
+                  ? ExpansionPanelList(
+                      elevation: 3,
+                      animationDuration: const Duration(milliseconds: 600),
+                      expansionCallback: (index, isExpanded) {
+                        setState(() {
+                          _hourlyItems[index].isExpanded = !isExpanded;
+                        });
+                      },
+                      children: _hourlyItems
+                          .where((hourlyItem) => ((hourlyItem.hourly.dt! * 1000) < unixTimestampHoursFromNow))
+                          .map((hourlyItem) => _buildExpansionPanel(hourlyItem, _theme))
+                          .toList(),
+                    )
+                  : const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+            ),
+          )
+        : const NoInternetConnection();
+  }
+
+  List<HourlyItem> generateHourlyForecastItem(OpenWeatherMap _openWeatherMap) {
+    return List<HourlyItem>.generate(
+      _openWeatherMap.hourly!.length,
+      (int index) {
+        return HourlyItem(
+          hourly: _openWeatherMap.hourly![index],
+        );
+      },
+    );
   }
 }
 

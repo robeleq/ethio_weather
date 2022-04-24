@@ -4,8 +4,13 @@ import 'package:http/http.dart' show get;
 
 import '../models/open_weather_map.dart';
 
-class OpenWeatherMapService {
-  Future<OpenWeatherMap> geOneCallWeather(String url) async {
+abstract class WeatherRepository {
+  Future<OpenWeatherMap> fetchWeatherData(String url);
+}
+
+class OpenWeatherMapRepository implements WeatherRepository {
+  @override
+  Future<OpenWeatherMap> fetchWeatherData(String url) async {
     var httpsOneCallUri = Uri.parse(url);
     final response = await get(httpsOneCallUri, headers: {"Accept": "application/json"});
     if (response.statusCode == 200) {
