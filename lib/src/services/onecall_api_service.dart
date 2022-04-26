@@ -12,6 +12,6 @@ class OneCallApiService {
       final jsonData = json.decode(response.body);
       return OpenWeatherMap.fromJson(jsonData);
     }
-    throw Exception('Failed to Open Weather data');
+    return Future.error('Failed to Open Weather data');
   }
 }

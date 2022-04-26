@@ -20,6 +20,8 @@ class CurrentWeatherCard extends ConsumerWidget {
     final themeProvider = ref.watch(themeChangeNotifierProvider);
     final _theme = themeProvider.getCurrentTheme();
 
+    final _userLocation = ref.watch(userLocationNotifierProvider);
+
     return Column(
       children: [
         Container(
@@ -38,18 +40,18 @@ class CurrentWeatherCard extends ConsumerWidget {
                 children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: const <Widget>[
-                      Icon(
+                    children: <Widget>[
+                      const Icon(
                         Icons.location_on,
                         color: Colors.red,
                         size: 24,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 8.0,
                       ),
                       Text(
-                        'Time Zone: Addis_Ababa',
-                        style: TextStyle(fontSize: 14.0),
+                        _userLocation.userLocation.address,
+                        style: const TextStyle(fontSize: 14.0),
                       ),
                     ],
                   ),
