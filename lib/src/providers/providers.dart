@@ -1,5 +1,6 @@
 import 'package:ethio_weather/src/models/open_weather_map.dart';
 import 'package:ethio_weather/src/providers/connection_notifier.dart';
+import 'package:ethio_weather/src/providers/onecall_weather_notifier.dart';
 import 'package:ethio_weather/src/providers/theme_notifier.dart';
 import 'package:ethio_weather/src/providers/weather_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,4 +34,9 @@ final openWeatherMapNotifierProvider = StateNotifierProvider<OpenWeatherMapNotif
   final userLocation = ref.watch(userLocationProvider);
   final openWeatherMapRepository = ref.watch(openWeatherMapRepositoryProvider);
   return OpenWeatherMapNotifier(openWeatherMapRepository, userLocation);
+});
+
+final oneCallApiWeatherNotifierProvider = ChangeNotifierProvider((ref) {
+  final userLocation = ref.watch(userLocationProvider);
+  return OneCallWeatherNotifier(userLocation);
 });

@@ -1,0 +1,17 @@
+{
+    "tab_settings": "ቅንብር",
+    "settings_title_language": "ቋንቋ",
+    "settings_title_preferences": "ምርጫዎች",
+    "settings_title_theme_dark": "ጥቁር ገፅታ",
+    "settings_title_about": "ስለኛ",
+    "settings_title_about_version": "እትም",
+    "settings_title_about_subtitle_version": "v 1.0",
+    "settings_title_about_share": "ያጋሩ",
+    "settings_title_about_rate_us": "ደረጃ ይስጡ",
+    "settings_title_privacy": "ግለ መብት",
+    "settings_title_privacy_terms": "አጠቃቀም",
+    "settings_title_privacy_open_licenses": "የግልጽ ምንጮች",
+    "title_no_internet_connection": "የበይነመረብ ግንኙነት የለም!",
+    "subtitle_no_internet_connection": "እባክዎ የበይነመረብ ግንኙነትዎን ይፈትሹ እና እንደገና ይሞክሩ።",
+
+}

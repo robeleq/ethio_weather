@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_icons/weather_icons.dart';
 
-import '../config.dart';
 import '../providers/providers.dart';
 import '../styles/colors.dart';
 
@@ -28,10 +27,10 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
   void initState() {
     super.initState();
 
-    final _openWeatherMap = ref.read(openWeatherMapNotifierProvider);
+    final _oneCallApiWeather = ref.read(oneCallApiWeatherNotifierProvider);
 
-    if (_openWeatherMap.daily != null) {
-      _dailyForecastItems = generateDailyForecastItem(_openWeatherMap);
+    if (_oneCallApiWeather.weather != null) {
+      _dailyForecastItems = generateDailyForecastItem(_oneCallApiWeather.weather!);
     }
   }
 
@@ -486,51 +485,41 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
 
     final _internetConnected = ref.watch(connectionStateProvider);
 
-    final _userLocation = ref.watch(userLocationProvider);
+    final _oneCallApiWeather = ref.watch(oneCallApiWeatherNotifierProvider);
 
     final Color _titleColor = _theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
 
     // Reloads the weather data when connection is available
     if (_internetConnected) {
       if (_dailyForecastItems.isEmpty) {
-        final apiOneCallUrl = Uri.https(Config.apiBaseUrl, 'data/2.5/onecall', {
-          'lat': _userLocation.latitude.toString(),
-          'lon': _userLocation.longitude.toString(),
-          'appid': Config.appId,
-          'units': 'metric',
-          'lang': 'en',
-        });
-        ref.read(openWeatherMapNotifierProvider.notifier).getWeather(apiOneCallUrl.toString());
+        ref.read(oneCallApiWeatherNotifierProvider).reloadWeather();
 
-        final _openWeatherMap = ref.watch(openWeatherMapNotifierProvider);
-
-        if (_openWeatherMap.hourly != null) {
-          _dailyForecastItems = generateDailyForecastItem(_openWeatherMap);
+        if (_oneCallApiWeather.weather != null) {
+          _dailyForecastItems = generateDailyForecastItem(_oneCallApiWeather.weather!);
         }
       }
     }
 
-    return _internetConnected
-        ? Center(
-            child: SingleChildScrollView(
-              child: (_dailyForecastItems.isNotEmpty)
-                  ? ExpansionPanelList(
-                      elevation: 3,
-                      animationDuration: const Duration(milliseconds: 600),
-                      expansionCallback: (index, isExpanded) {
-                        setState(() {
-                          _dailyForecastItems[index].isExpanded = !isExpanded;
-                        });
-                      },
-                      children:
-                          _dailyForecastItems.map((hourlyItem) => _buildExpansionPanel(hourlyItem, _theme)).toList(),
-                    )
-                  : const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-            ),
-          )
-        : const NoInternetConnection();
+    if (_internetConnected) {
+      return _dailyForecastItems.isNotEmpty
+          ? SingleChildScrollView(
+              child: ExpansionPanelList(
+                elevation: 3,
+                animationDuration: const Duration(milliseconds: 600),
+                expansionCallback: (index, isExpanded) {
+                  setState(() {
+                    _dailyForecastItems[index].isExpanded = !isExpanded;
+                  });
+                },
+                children: _dailyForecastItems.map((hourlyItem) => _buildExpansionPanel(hourlyItem, _theme)).toList(),
+              ),
+            )
+          : const Center(
+              child: CircularProgressIndicator(),
+            );
+    } else {
+      return const NoInternetConnection();
+    }
   }
 
   List<DailyItem> generateDailyForecastItem(OpenWeatherMap _openWeatherMap) {
