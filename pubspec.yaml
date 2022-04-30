@@ -29,6 +29,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
   intl: ^0.17.0
   http: ^0.13.4
   timeago: ^3.2.2
@@ -76,6 +79,7 @@ flutter:
     - assets/images/
     - assets/images/icons/
     - assets/fonts/
+    - langs/
 
   fonts:
     - family: Poppins

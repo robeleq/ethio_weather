@@ -7,7 +7,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_icons/weather_icons.dart';
 
+import '../locales/app_localizations.dart';
 import '../providers/providers.dart';
+import '../services/weather_description_locales.dart';
 
 class CurrentWeatherCard extends ConsumerWidget {
   final CurrentWeather _currentWeather;
@@ -21,6 +23,9 @@ class CurrentWeatherCard extends ConsumerWidget {
     final _theme = themeProvider.getCurrentTheme();
 
     final _userLocation = ref.watch(userLocationNotifierProvider);
+
+    final _weatherId = _currentWeather.weather?[0].id;
+    final _weatherIcon = _currentWeather.weather?[0].icon;
 
     return Column(
       children: [
@@ -79,13 +84,13 @@ class CurrentWeatherCard extends ConsumerWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Image.asset(
-                                'assets/images/icons/${_currentWeather.weather?[0].icon}@2x.png',
+                                'assets/images/icons/$_weatherIcon@2x.png',
                                 height: 56,
                                 width: 56,
                                 fit: BoxFit.fitWidth,
                               ),
                               const SizedBox(
-                                width: 8.0,
+                                width: 2.0,
                               ),
                               Text(
                                 "${_currentWeather.temp} °C",
@@ -95,13 +100,15 @@ class CurrentWeatherCard extends ConsumerWidget {
                           ),
                         ),
                         Expanded(
-                          flex: 4,
+                          flex: 6,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                StringUtils.capitalize("${_currentWeather.weather?[0].description}", allWords: true),
+                                StringUtils.capitalize(
+                                    "${WeatherDescriptionLocales(context).getWeatherDescription(_weatherId!)}",
+                                    allWords: true),
                                 style: const TextStyle(fontSize: 12.0),
                               ),
                               const SizedBox(
@@ -115,7 +122,7 @@ class CurrentWeatherCard extends ConsumerWidget {
                                 height: 4.0,
                               ),
                               Text(
-                                "Feels like ${_currentWeather.feelsLike} °C",
+                                "${AppLocalizations.of(context)!.translate("label_feels_like")} ${_currentWeather.feelsLike} °C",
                                 style: const TextStyle(fontSize: 12.0),
                               ),
                             ],
@@ -153,15 +160,15 @@ class CurrentWeatherCard extends ConsumerWidget {
                             color: _theme.iconTheme.color,
                             size: 24.0,
                           ),
-                          const Text(
-                            "Precipitation",
-                            style: TextStyle(fontSize: 11.0),
+                          Text(
+                            AppLocalizations.of(context)!.translate("label_precipitation") ?? "Precipitation",
+                            style: const TextStyle(fontSize: 11.0),
                           ),
                           const SizedBox(
                             height: 8,
                           ),
                           Text(
-                            "${_todayWeather.pop! * 100}",
+                            "${double.parse((_todayWeather.pop! * 100).toStringAsFixed(2))}",
                             style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -189,9 +196,9 @@ class CurrentWeatherCard extends ConsumerWidget {
                             color: _theme.iconTheme.color,
                             size: 24.0,
                           ),
-                          const Text(
-                            "Humidity",
-                            style: TextStyle(fontSize: 11.0),
+                          Text(
+                            AppLocalizations.of(context)!.translate("label_humidity") ?? "Humidity",
+                            style: const TextStyle(fontSize: 11.0),
                           ),
                           const SizedBox(
                             height: 8,
@@ -226,9 +233,9 @@ class CurrentWeatherCard extends ConsumerWidget {
                             color: _theme.iconTheme.color,
                             size: 24.0,
                           ),
-                          const Text(
-                            "Wind",
-                            style: TextStyle(fontSize: 11.0),
+                          Text(
+                            AppLocalizations.of(context)!.translate("label_wind") ?? "Wind",
+                            style: const TextStyle(fontSize: 11.0),
                           ),
                           const SizedBox(
                             height: 8,
@@ -270,9 +277,9 @@ class CurrentWeatherCard extends ConsumerWidget {
                             color: _theme.iconTheme.color,
                             size: 24.0,
                           ),
-                          const Text(
-                            "Pressure",
-                            style: TextStyle(fontSize: 11.0),
+                          Text(
+                            AppLocalizations.of(context)!.translate("label_pressure") ?? "Pressure",
+                            style: const TextStyle(fontSize: 11.0),
                           ),
                           const SizedBox(
                             height: 8,
@@ -309,15 +316,15 @@ class CurrentWeatherCard extends ConsumerWidget {
                           const SizedBox(
                             height: 8,
                           ),
-                          const Text(
-                            "Visibility",
-                            style: TextStyle(fontSize: 11.0),
+                          Text(
+                            AppLocalizations.of(context)!.translate("label_visibility") ?? "Visibility",
+                            style: const TextStyle(fontSize: 11.0),
                           ),
                           const SizedBox(
                             height: 8,
                           ),
                           Text(
-                            "${_currentWeather.visibility! / 1000} km",
+                            "${double.parse((_currentWeather.visibility! / 1000).toStringAsFixed(2))} km",
                             style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -346,9 +353,9 @@ class CurrentWeatherCard extends ConsumerWidget {
                             color: _theme.iconTheme.color,
                             size: 24.0,
                           ),
-                          const Text(
-                            "UV Index",
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!.translate("label_uvi") ?? "UV Index",
+                            style: const TextStyle(
                               fontSize: 11.0,
                             ),
                           ),

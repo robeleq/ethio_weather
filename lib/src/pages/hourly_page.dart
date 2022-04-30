@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_icons/weather_icons.dart';
 
+import '../locales/app_localizations.dart';
 import '../models/hourly_forecast.dart';
 import '../providers/providers.dart';
 import '../styles/colors.dart';
@@ -126,11 +127,11 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 8.0),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
                                   child: Text(
-                                    'Feels Like',
-                                    style: TextStyle(fontSize: 14),
+                                    AppLocalizations.of(context)!.translate("label_feels_like") ?? 'Feels Like',
+                                    style: const TextStyle(fontSize: 14),
                                   ),
                                 ),
                                 Padding(
@@ -161,11 +162,11 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 8.0),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
                                   child: Text(
-                                    'Wind',
-                                    style: TextStyle(fontSize: 14),
+                                    AppLocalizations.of(context)!.translate("label_wind") ?? 'Wind',
+                                    style: const TextStyle(fontSize: 14),
                                   ),
                                 ),
                                 Padding(
@@ -203,11 +204,11 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 8.0),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
                                   child: Text(
-                                    'Humidity',
-                                    style: TextStyle(fontSize: 14),
+                                    AppLocalizations.of(context)!.translate("label_humidity") ?? 'Humidity',
+                                    style: const TextStyle(fontSize: 14),
                                   ),
                                 ),
                                 Padding(
@@ -238,11 +239,11 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 8.0),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
                                   child: Text(
-                                    'UV Index',
-                                    style: TextStyle(fontSize: 14),
+                                    AppLocalizations.of(context)!.translate("label_uvi") ?? 'UV Index',
+                                    style: const TextStyle(fontSize: 14),
                                   ),
                                 ),
                                 Padding(

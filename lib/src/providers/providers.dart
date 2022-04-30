@@ -1,3 +1,4 @@
+import 'package:ethio_weather/src/providers/language_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import './connection_notifier.dart';
@@ -27,4 +28,8 @@ final oneCallApiWeatherNotifierProvider = ChangeNotifierProvider((ref) {
 final userLocationNotifierProvider = ChangeNotifierProvider((ref) {
   final hasInternetConnection = ref.watch(connectionStateProvider);
   return LocationNotifier(hasInternetConnection);
+});
+
+final languageNotifierProvider = ChangeNotifierProvider((ref) {
+  return LanguageNotifier();
 });
