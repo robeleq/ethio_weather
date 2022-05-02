@@ -168,7 +168,7 @@ class CurrentWeatherCard extends ConsumerWidget {
                             height: 8,
                           ),
                           Text(
-                            "${double.parse((_todayWeather.pop! * 100).toStringAsFixed(2))}",
+                            "${double.parse((_todayWeather.pop! * 100).toStringAsFixed(2))} %",
                             style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
                           ),
                         ],
