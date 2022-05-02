@@ -8,6 +8,7 @@ import 'package:weather_icons/weather_icons.dart';
 import '../locales/app_localizations.dart';
 import '../models/hourly_forecast.dart';
 import '../providers/providers.dart';
+import '../services/weather_description_locales.dart';
 import '../styles/colors.dart';
 import '../widgets/no_internet_connection_card.dart';
 
@@ -35,6 +36,8 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
   }
 
   ExpansionPanel _buildExpansionPanel(HourlyItem hourlyItem, ThemeData _theme) {
+    final _weatherId = hourlyItem.hourly.weather?[0].id;
+
     return ExpansionPanel(
       canTapOnHeader: true,
       backgroundColor: _theme.brightness == Brightness.dark ? dSecondaryDarkColor : lSecondaryLightColor,
@@ -89,7 +92,9 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
-            child: Text(StringUtils.capitalize("${hourlyItem.hourly.weather?[0].description}", allWords: true),
+            child: Text(
+                StringUtils.capitalize("${WeatherDescriptionLocales(context).getWeatherDescription(_weatherId!)}",
+                    allWords: true),
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           ),
           Container(
