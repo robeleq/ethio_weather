@@ -12,6 +12,11 @@
     "label_uvi": "UV index",
     "label_feels_like": "Feels Like",
 
+    "label_temp": "Temperature",
+    "label_time_format": "Time Format",
+    "label_weather_units": "Weather Units",
+
+
     "rain_label_light": "light rain",
     "rain_label_moderate": "moderate rain",
     "rain_label_heavy_intensity": "heavy intensity rain",

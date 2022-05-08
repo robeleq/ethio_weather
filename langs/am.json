@@ -12,6 +12,11 @@
     "label_uvi": "አልትራ ቫዮልት",
     "label_feels_like": "የሚሰማዎ ሙቀት",
 
+    "label_temp": "የሙቀት መጠን",
+    "label_time_format": "የጊዜ አቆጣጠር",
+    "label_weather_units": "የአየር ሁኔታ መለኪያ",
+
+
     "rain_label_light": "ቀላል ዝናብ",
     "rain_label_moderate": "መካከለኛ ዝናብ",
     "rain_label_heavy_intensity": "ከባድ ዝናብ",

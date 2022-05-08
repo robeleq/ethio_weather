@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:weather_icons/weather_icons.dart';
 
 import '../locales/app_locale.dart';
+import '../locales/app_localizations.dart';
 import '../providers/providers.dart';
 import '../styles/colors.dart';
 import '../styles/theme_scheme.dart';
@@ -23,6 +24,7 @@ class SettingsPage extends ConsumerStatefulWidget {
 
 class _SettingsPageState extends ConsumerState<SettingsPage> with TickerProviderStateMixin<SettingsPage> {
   bool _isThemeDark = false;
+  bool _expanded = false;
 
   final Map<String, String> languagesMap = appLocale.supportedLanguageMap;
 
@@ -149,14 +151,96 @@ class _SettingsPageState extends ConsumerState<SettingsPage> with TickerProvider
             const SizedBox(
               height: 8.0,
             ),
-            SettingsTile(
-              title: 'Temp',
-              subtitle: "°C",
-              leading: BoxedIcon(
-                WeatherIcons.thermometer,
-                color: _theme.iconTheme.color,
+            Card(
+              elevation: 4.0,
+              margin: const EdgeInsets.symmetric(vertical: 8.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
               ),
-              onTap: () {},
+              child: Container(
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.transparent),
+                child: ExpansionPanelList(
+                  expandedHeaderPadding: EdgeInsets.zero,
+                  expansionCallback: (panelIndex, isExpanded) {
+                    _expanded = !_expanded;
+                    setState(() {});
+                  },
+                  children: [
+                    ExpansionPanel(
+                      backgroundColor:
+                          _theme.brightness == Brightness.dark ? dSecondaryDarkColor : lSecondaryLightColor,
+                      headerBuilder: (context, isExpanded) {
+                        return ListTile(
+                          title: Text(
+                            "${AppLocalizations.of(context)!.translate("label_weather_units")}",
+                            style: TextStyle(color: _titleColor),
+                          ),
+                        );
+                      },
+                      body: Column(
+                        children: [
+                          ListTile(
+                            title: Text(
+                              "${AppLocalizations.of(context)!.translate("label_temp")}: °C",
+                              style: TextStyle(color: _titleColor),
+                            ),
+                            leading: BoxedIcon(
+                              WeatherIcons.thermometer,
+                              color: _theme.iconTheme.color,
+                            ),
+                          ),
+                          ListTile(
+                            title: Text(
+                              "${AppLocalizations.of(context)!.translate("label_wind")}: m/s",
+                              style: TextStyle(color: _titleColor),
+                            ),
+                            leading: WindIcon(
+                              degree: 90,
+                              color: _theme.iconTheme.color,
+                              size: 24.0,
+                            ),
+                          ),
+                          ListTile(
+                            title: Text(
+                              "${AppLocalizations.of(context)!.translate("label_pressure")}: hPa",
+                              style: TextStyle(color: _titleColor),
+                            ),
+                            leading: BoxedIcon(
+                              WeatherIcons.barometer,
+                              color: _theme.iconTheme.color,
+                              size: 24.0,
+                            ),
+                          ),
+                          ListTile(
+                            title: Text(
+                              "${AppLocalizations.of(context)!.translate("label_precipitation")}: %",
+                              style: TextStyle(color: _titleColor),
+                            ),
+                            leading: BoxedIcon(
+                              WeatherIcons.rain,
+                              color: _theme.iconTheme.color,
+                              size: 24.0,
+                            ),
+                          ),
+                          ListTile(
+                            title: Text(
+                              "${AppLocalizations.of(context)!.translate("label_time_format")}: 24-hour",
+                              style: TextStyle(color: _titleColor),
+                            ),
+                            leading: BoxedIcon(
+                              WeatherIcons.time_3,
+                              color: _theme.iconTheme.color,
+                              size: 24.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                      isExpanded: _expanded,
+                      canTapOnHeader: true,
+                    )
+                  ],
+                ),
+              ),
             ),
             const SizedBox(
               height: 8.0,
