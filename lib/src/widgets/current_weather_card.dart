@@ -72,7 +72,7 @@ class CurrentWeatherCard extends ConsumerWidget {
                     height: 8.0,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,11 +90,11 @@ class CurrentWeatherCard extends ConsumerWidget {
                                 fit: BoxFit.fitWidth,
                               ),
                               const SizedBox(
-                                width: 2.0,
+                                width: 1.0,
                               ),
                               Text(
                                 "${_currentWeather.temp} °C",
-                                style: const TextStyle(fontSize: 22.0),
+                                style: const TextStyle(fontSize: 20.0),
                               ),
                             ],
                           ),
@@ -103,7 +103,7 @@ class CurrentWeatherCard extends ConsumerWidget {
                           flex: 6,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisSize: MainAxisSize.min,
+                            mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               Text(
                                 StringUtils.capitalize(

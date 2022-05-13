@@ -9,19 +9,14 @@ class AppLocale {
 
   AppLocale._internal();
 
-  final List<String> supportedLanguages = [
-    "English",
-    "አማርኛ",
-  ];
+  final List<String> supportedLanguages = ["English", "አማርኛ", "ትግሪኛ"];
 
-  final List<String> supportedLanguagesCodes = [
-    "en",
-    "am",
-  ];
+  final List<String> supportedLanguagesCodes = ["en", "am", "tg"];
 
   final Map<String, String> supportedLanguageMap = {
     "en": "English",
     "am": "አማርኛ",
+    "tg": "ትግሪኛ",
   };
 
   //returns the list of supported Locales
