@@ -1,4 +1,5 @@
-# ethio_weather
+# Ethio_weather Mobile Application 
+# ኢትዮ ዌዘር የሞባይል መተግበርያ
 
 Ethiopia Weather application provide weather information.
 
