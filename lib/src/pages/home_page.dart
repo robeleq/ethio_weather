@@ -49,6 +49,7 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
         unselectedFontSize: 14,
         onTap: _onTap,
         currentIndex: _currentIndex,
+        selectedLabelStyle: const TextStyle(overflow: TextOverflow.ellipsis),
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: const Icon(Icons.calendar_today),

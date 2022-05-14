@@ -16,6 +16,9 @@ class LangUtil {
       case "tg":
         locale = const Locale('tg');
         break;
+      case "or":
+        locale = const Locale('or');
+        break;
       default:
         locale = const Locale("en");
     }
