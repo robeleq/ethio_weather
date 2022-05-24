@@ -57,4 +57,7 @@ class HourlyForecast {
     pop = json["pop"] is int ? (json['pop'] as int).toDouble() : json['pop'];
     rain = json['rain'] != null ? Rain.fromJson(json['rain']) : null;
   }
+
+  static List<HourlyForecast> listFromJson(List<dynamic> list) =>
+      List<HourlyForecast>.from(list.map((x) => HourlyForecast.fromJson(x)));
 }
