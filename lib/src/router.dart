@@ -37,7 +37,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     default:
       return MaterialPageRoute(
           builder: (BuildContext context) => const HomePage(
-                title: "Ethio Weather App",
+                title: "Ethio Weather",
               ));
   }
 }

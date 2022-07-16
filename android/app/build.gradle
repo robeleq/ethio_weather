@@ -21,6 +21,21 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def flutterMinSdkVersion = localProperties.getProperty('flutter.minSdkVersion').toInteger()
+if (flutterMinSdkVersion == null) {
+    flutterMinSdkVersion = 20
+}
+
+def flutterTargetSdkVersion = localProperties.getProperty('flutter.targetSdkVersion').toInteger()
+if (flutterTargetSdkVersion == null) {
+    flutterTargetSdkVersion = 31
+}
+
+def flutterCompileSdkVersion = localProperties.getProperty('flutter.compileSdkVersion').toInteger()
+if (flutterCompileSdkVersion == null) {
+    flutterCompileSdkVersion = 31
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -35,8 +50,8 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.ethio_weather"
-        minSdkVersion flutter.minSdkVersion
+        applicationId "com.ethio.weather"
+        minSdkVersion flutterMinSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

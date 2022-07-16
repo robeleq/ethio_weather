@@ -1,4 +1,4 @@
-package com.example.ethio_weather;
+package com.ethio.weather;
 
 import io.flutter.embedding.android.FlutterActivity;
 

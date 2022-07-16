@@ -43,7 +43,7 @@ class _EthioWeatherAppState extends ConsumerState<EthioWeatherApp> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Ethio Weather App",
+      title: "Ethio Weather",
       theme: _theme,
       localizationsDelegates: [
         _newLocaleDelegate,
