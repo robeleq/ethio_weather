@@ -38,12 +38,12 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
     }
   }
 
-  ExpansionPanel _buildExpansionPanel(DailyItem dailyItem, ThemeData _theme) {
-    final _weatherId = dailyItem.daily.weather?[0].id;
+  ExpansionPanel _buildExpansionPanel(DailyItem dailyItem, ThemeData theme) {
+    final weatherId = dailyItem.daily.weather?[0].id;
 
     return ExpansionPanel(
       canTapOnHeader: true,
-      backgroundColor: _theme.brightness == Brightness.dark ? dSecondaryDarkColor : lSecondaryLightColor,
+      backgroundColor: theme.brightness == Brightness.dark ? dSecondaryDarkColor : lSecondaryLightColor,
       headerBuilder: (context, isExpanded) {
         return Container(
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
@@ -135,7 +135,7 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
                           scrollDirection: Axis.horizontal,
                           child: Text(
                             StringUtils.capitalize(
-                                "${WeatherDescriptionLocales(context).getWeatherDescription(_weatherId!)}",
+                                "${WeatherDescriptionLocales(context).getWeatherDescription(weatherId!)}",
                                 allWords: true),
                             maxLines: 1,
                             overflow: TextOverflow.fade,
@@ -176,7 +176,7 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(8.0),
               border: Border.all(
-                color: _theme.brightness == Brightness.dark ? dPrimaryBackgroundColor : lPrimaryBackgroundColor,
+                color: theme.brightness == Brightness.dark ? dPrimaryBackgroundColor : lPrimaryBackgroundColor,
                 width: 0.5,
               ),
             ),
@@ -195,7 +195,7 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
                         children: <Widget>[
                           BoxedIcon(
                             WeatherIcons.humidity,
-                            color: _theme.focusColor,
+                            color: theme.focusColor,
                             size: 20.0,
                           ),
                           Expanded(
@@ -235,7 +235,7 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
                         children: <Widget>[
                           BoxedIcon(
                             WeatherIcons.sunrise,
-                            color: _theme.focusColor,
+                            color: theme.focusColor,
                             size: 20.0,
                           ),
                           Expanded(
@@ -275,7 +275,7 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
                         children: <Widget>[
                           WindIcon(
                             degree: num.parse("${dailyItem.daily.windDeg}"),
-                            color: _theme.iconTheme.color,
+                            color: theme.iconTheme.color,
                             size: 24.0,
                           ),
                           Expanded(
@@ -354,7 +354,7 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
                           scrollDirection: Axis.horizontal,
                           child: Text(
                             StringUtils.capitalize(
-                                "${WeatherDescriptionLocales(context).getWeatherDescription(_weatherId)}",
+                                "${WeatherDescriptionLocales(context).getWeatherDescription(weatherId)}",
                                 allWords: true),
                             maxLines: 1,
                             overflow: TextOverflow.fade,
@@ -395,7 +395,7 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(8.0),
               border: Border.all(
-                color: _theme.brightness == Brightness.dark ? dPrimaryBackgroundColor : lPrimaryBackgroundColor,
+                color: theme.brightness == Brightness.dark ? dPrimaryBackgroundColor : lPrimaryBackgroundColor,
                 width: 0.5,
               ),
             ),
@@ -414,7 +414,7 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
                         children: <Widget>[
                           BoxedIcon(
                             WeatherIcons.humidity,
-                            color: _theme.focusColor,
+                            color: theme.focusColor,
                             size: 20.0,
                           ),
                           Expanded(
@@ -454,7 +454,7 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
                         children: <Widget>[
                           BoxedIcon(
                             WeatherIcons.sunrise,
-                            color: _theme.focusColor,
+                            color: theme.focusColor,
                             size: 20.0,
                           ),
                           Expanded(
@@ -494,7 +494,7 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
                         children: <Widget>[
                           WindIcon(
                             degree: num.parse("${dailyItem.daily.windDeg}"),
-                            color: _theme.iconTheme.color,
+                            color: theme.iconTheme.color,
                             size: 24.0,
                           ),
                           Expanded(
@@ -541,26 +541,26 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
   @override
   Widget build(BuildContext context) {
     final themeProvider = ref.watch(themeChangeNotifierProvider);
-    final _theme = themeProvider.getCurrentTheme();
+    final theme = themeProvider.getCurrentTheme();
 
-    final _internetConnected = ref.watch(connectionStateProvider);
+    final internetConnected = ref.watch(connectionStateProvider);
 
-    final _oneCallApiWeather = ref.watch(oneCallApiWeatherNotifierProvider);
+    final oneCallApiWeather = ref.watch(oneCallApiWeatherNotifierProvider);
 
-    final Color _titleColor = _theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
+    final Color _titleColor = theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
 
     // Reloads the weather data when connection is available
-    if (_internetConnected) {
+    if (internetConnected) {
       if (_dailyForecastItems.isEmpty) {
         ref.read(oneCallApiWeatherNotifierProvider).reloadWeather();
 
-        if (_oneCallApiWeather.weather != null) {
-          _dailyForecastItems = generateDailyForecastItem(_oneCallApiWeather.weather!);
+        if (oneCallApiWeather.weather != null) {
+          _dailyForecastItems = generateDailyForecastItem(oneCallApiWeather.weather!);
         }
       }
     }
 
-    if (_internetConnected) {
+    if (internetConnected) {
       return _dailyForecastItems.isNotEmpty
           ? SingleChildScrollView(
               child: ExpansionPanelList(
@@ -568,10 +568,10 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
                 animationDuration: const Duration(milliseconds: 600),
                 expansionCallback: (index, isExpanded) {
                   setState(() {
-                    _dailyForecastItems[index].isExpanded = !isExpanded;
+                    _dailyForecastItems[index].isExpanded = isExpanded;
                   });
                 },
-                children: _dailyForecastItems.map((hourlyItem) => _buildExpansionPanel(hourlyItem, _theme)).toList(),
+                children: _dailyForecastItems.map((hourlyItem) => _buildExpansionPanel(hourlyItem, theme)).toList(),
               ),
             )
           : const Center(
@@ -582,12 +582,12 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
     }
   }
 
-  List<DailyItem> generateDailyForecastItem(OpenWeatherMap _openWeatherMap) {
+  List<DailyItem> generateDailyForecastItem(OpenWeatherMap openWeatherMap) {
     return List<DailyItem>.generate(
-      _openWeatherMap.daily!.length,
+      openWeatherMap.daily!.length,
       (int index) {
         return DailyItem(
-          daily: _openWeatherMap.daily![index],
+          daily: openWeatherMap.daily![index],
         );
       },
     );

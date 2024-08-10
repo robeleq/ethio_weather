@@ -37,12 +37,12 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
     }
   }
 
-  ExpansionPanel _buildExpansionPanel(HourlyItem hourlyItem, ThemeData _theme) {
-    final _weatherId = hourlyItem.hourly.weather?[0].id;
+  ExpansionPanel _buildExpansionPanel(HourlyItem hourlyItem, ThemeData theme) {
+    final weatherId = hourlyItem.hourly.weather?[0].id;
 
     return ExpansionPanel(
       canTapOnHeader: true,
-      backgroundColor: _theme.brightness == Brightness.dark ? dSecondaryDarkColor : lSecondaryLightColor,
+      backgroundColor: theme.brightness == Brightness.dark ? dSecondaryDarkColor : lSecondaryLightColor,
       headerBuilder: (context, isExpanded) {
         return Container(
             decoration: const BoxDecoration(color: Colors.transparent),
@@ -97,7 +97,7 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Text(
-                  StringUtils.capitalize("${WeatherDescriptionLocales(context).getWeatherDescription(_weatherId!)}",
+                  StringUtils.capitalize("${WeatherDescriptionLocales(context).getWeatherDescription(weatherId!)}",
                       allWords: true),
                   maxLines: 1,
                   overflow: TextOverflow.fade,
@@ -132,7 +132,7 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
                           children: <Widget>[
                             BoxedIcon(
                               WeatherIcons.thermometer,
-                              color: _theme.iconTheme.color,
+                              color: theme.iconTheme.color,
                               size: 24.0,
                             ),
                             Column(
@@ -172,7 +172,7 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
                           children: <Widget>[
                             WindIcon(
                               degree: num.parse("${hourlyItem.hourly.windDeg}"),
-                              color: _theme.iconTheme.color,
+                              color: theme.iconTheme.color,
                               size: 24.0,
                             ),
                             Column(
@@ -219,7 +219,7 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
                           children: <Widget>[
                             BoxedIcon(
                               WeatherIcons.humidity,
-                              color: _theme.iconTheme.color,
+                              color: theme.iconTheme.color,
                               size: 24.0,
                             ),
                             Column(
@@ -259,7 +259,7 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
                           children: <Widget>[
                             BoxedIcon(
                               WeatherIcons.sunrise,
-                              color: _theme.iconTheme.color,
+                              color: theme.iconTheme.color,
                               size: 24.0,
                             ),
                             Column(
@@ -305,29 +305,29 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
   @override
   Widget build(BuildContext context) {
     final themeProvider = ref.watch(themeChangeNotifierProvider);
-    final _theme = themeProvider.getCurrentTheme();
+    final theme = themeProvider.getCurrentTheme();
 
-    final _internetConnected = ref.watch(connectionStateProvider);
+    final internetConnected = ref.watch(connectionStateProvider);
 
-    final Color _titleColor = _theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
+    final Color _titleColor = theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
 
     final hoursFromNow = DateTime.now().add(const Duration(hours: 11));
     final unixTimestampHoursFromNow = hoursFromNow.toUtc().millisecondsSinceEpoch;
 
-    final _oneCallApiWeather = ref.watch(oneCallApiWeatherNotifierProvider);
+    final oneCallApiWeather = ref.watch(oneCallApiWeatherNotifierProvider);
 
     // Reloads the weather data when connection is available
-    if (_internetConnected) {
+    if (internetConnected) {
       if (_hourlyItems.isEmpty) {
         ref.read(oneCallApiWeatherNotifierProvider).reloadWeather();
 
-        if (_oneCallApiWeather.weather != null) {
-          _hourlyItems = generateHourlyForecastItem(_oneCallApiWeather.weather!);
+        if (oneCallApiWeather.weather != null) {
+          _hourlyItems = generateHourlyForecastItem(oneCallApiWeather.weather!);
         }
       }
     }
 
-    if (_internetConnected) {
+    if (internetConnected) {
       return _hourlyItems.isNotEmpty
           ? SingleChildScrollView(
               child: ExpansionPanelList(
@@ -335,12 +335,12 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
                 animationDuration: const Duration(milliseconds: 600),
                 expansionCallback: (index, isExpanded) {
                   setState(() {
-                    _hourlyItems[index].isExpanded = !isExpanded;
+                    _hourlyItems[index].isExpanded = isExpanded;
                   });
                 },
                 children: _hourlyItems
                     .where((hourlyItem) => ((hourlyItem.hourly.dt! * 1000) < unixTimestampHoursFromNow))
-                    .map((hourlyItem) => _buildExpansionPanel(hourlyItem, _theme))
+                    .map((hourlyItem) => _buildExpansionPanel(hourlyItem, theme))
                     .toList(),
               ),
             )
@@ -352,12 +352,12 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
     }
   }
 
-  List<HourlyItem> generateHourlyForecastItem(OpenWeatherMap _openWeatherMap) {
+  List<HourlyItem> generateHourlyForecastItem(OpenWeatherMap openWeatherMap) {
     return List<HourlyItem>.generate(
-      _openWeatherMap.hourly!.length,
+      openWeatherMap.hourly!.length,
       (int index) {
         return HourlyItem(
-          hourly: _openWeatherMap.hourly![index],
+          hourly: openWeatherMap.hourly![index],
         );
       },
     );

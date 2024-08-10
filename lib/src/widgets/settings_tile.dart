@@ -45,7 +45,7 @@ class SettingsTile extends ConsumerWidget {
     final Color _titleColor = _theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
     final Color _subtitleColor = _theme.brightness == Brightness.light ? Colors.black54 : Colors.white60;
 
-    return androidTile(_theme.backgroundColor, _titleColor, _subtitleColor);
+    return androidTile(_theme.scaffoldBackgroundColor, _titleColor, _subtitleColor);
   }
 
   Widget androidTile(Color backgroundColor, Color titleColor, Color subtitleColor) {

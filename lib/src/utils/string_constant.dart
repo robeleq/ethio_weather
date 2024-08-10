@@ -12,7 +12,7 @@ class StringConstant {
 
   static const String appOtherContributors = "Contributors";
 
-  static const List<String> appContributors = ["Haftom T.", "Solomon T."];
+  static const List<String> appContributors = ["Haftom Tsegay.", "Solomon Birhanu."];
 
   static String openWeatherDesc =
       "All the data for Ethio Weather App is provided by One Call API. OpenWeather aggregates and process meteorological data from tens of thousands of weather stations. on-ground radars and satellites to bring you accurate and actionable weather data for any location worldwide.";

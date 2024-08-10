@@ -12,7 +12,7 @@ class ThemeScheme {
         fontFamily: 'Poppins',
         primaryColor: lPrimaryLightColor,
         scaffoldBackgroundColor: lPrimaryBackgroundColor,
-        backgroundColor: lPrimaryBackgroundColor,
+        // backgroundColor: lPrimaryBackgroundColor,
         focusColor: lPrimaryTextColor,
         primarySwatch: Colors.blue,
         appBarTheme: const AppBarTheme(
@@ -21,7 +21,11 @@ class ThemeScheme {
         inputDecorationTheme:
             const InputDecorationTheme(border: OutlineInputBorder(borderSide: BorderSide(color: lSecondaryLightColor))),
         iconTheme: const IconThemeData(color: lPrimaryDarkColor),
-        cardTheme: const CardTheme(color: lSecondaryLightColor));
+        cardTheme: const CardTheme(color: lSecondaryLightColor),
+        colorScheme: const ColorScheme.light().copyWith(
+          surface: lPrimaryBackgroundColor, // Custom background color
+        ),
+    );
   }
 
   static ThemeData darkTheme() {
@@ -30,7 +34,7 @@ class ThemeScheme {
       fontFamily: 'Poppins',
       primaryColor: dPrimaryDarkColor,
       scaffoldBackgroundColor: dPrimaryBackgroundColor,
-      backgroundColor: dPrimaryBackgroundColor,
+      // backgroundColor: dPrimaryBackgroundColor,
       focusColor: dPrimaryTextColor,
       primarySwatch: Colors.blue,
       appBarTheme: const AppBarTheme(
@@ -40,6 +44,9 @@ class ThemeScheme {
           const InputDecorationTheme(border: OutlineInputBorder(borderSide: BorderSide(color: dSecondaryDarkColor))),
       iconTheme: const IconThemeData(color: dPrimaryLightColor),
       cardTheme: const CardTheme(color: dSecondaryDarkColor),
+      colorScheme: const ColorScheme.dark().copyWith(
+        surface: dPrimaryBackgroundColor, // Custom background color
+      ),
     );
   }
 }

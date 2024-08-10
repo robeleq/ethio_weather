@@ -42,7 +42,7 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: _theme.backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         selectedItemColor: _theme.focusColor,
         unselectedItemColor: _theme.focusColor.withOpacity(.60),
         selectedFontSize: 14,

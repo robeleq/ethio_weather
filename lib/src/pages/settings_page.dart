@@ -95,14 +95,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage> with TickerProvider
         child: SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(16.0),
-        color: _theme.backgroundColor,
+        color: _theme.colorScheme.surface,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Text(
               "Language".toUpperCase(),
-              style: _theme.textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w700),
+              style: _theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700),
             ),
             const SizedBox(
               height: 8.0,
@@ -121,7 +121,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> with TickerProvider
             ),
             Text(
               "Theme".toUpperCase(),
-              style: _theme.textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w700),
+              style: _theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700),
             ),
             const SizedBox(
               height: 8.0,
@@ -150,7 +150,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> with TickerProvider
             ),
             Text(
               "Unit".toUpperCase(),
-              style: _theme.textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w700),
+              style: _theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700),
             ),
             const SizedBox(
               height: 8.0,
@@ -256,7 +256,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> with TickerProvider
             ),
             Text(
               "About".toUpperCase(),
-              style: _theme.textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w700),
+              style: _theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700),
             ),
             const SizedBox(
               height: 8.0,
@@ -288,7 +288,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> with TickerProvider
             ),
             Text(
               "Privacy".toUpperCase(),
-              style: _theme.textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w700),
+              style: _theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700),
             ),
             const SizedBox(
               height: 8.0,

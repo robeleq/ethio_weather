@@ -21,7 +21,7 @@ class _PrivacyPageState extends ConsumerState<PrivacyPage> {
   void initState() {
     super.initState();
     // Enable virtual display.
-    if (Platform.isAndroid) WebView.platform = AndroidWebView();
+    // if (Platform.isAndroid) WebView.platform = const SurfaceAndroidWebView();
   }
 
   @override
@@ -29,7 +29,29 @@ class _PrivacyPageState extends ConsumerState<PrivacyPage> {
     return SafeArea(
       child: Stack(
         children: [
-          WebView(
+          WebViewWidget(
+            controller: WebViewController()
+              ..setNavigationDelegate(
+                  NavigationDelegate(
+                  onPageStarted: (url) {
+
+                  },
+                  onPageFinished: (url) {
+
+                  },
+                )
+              )
+              ..setJavaScriptMode(JavaScriptMode.unrestricted)
+              ..runJavaScript("document.getElementsByTagName('header')[0].style.display='none';"
+                  "document.getElementsByTagName('footer')[0].style.display='none';")
+                  .then((value) => debugPrint('Page finished loading Javascript'))
+                  .catchError((onError) => debugPrint('$onError'))
+              ..loadRequest(
+                Uri.parse('https://ethio-weather.netlify.app/privacy.html'),
+              ),
+          ),
+
+          /* WebView(
             initialUrl: 'https://ethio-weather.netlify.app/privacy.html',
             javascriptMode: JavascriptMode.unrestricted,
             onWebViewCreated: (WebViewController webViewController) {
@@ -38,12 +60,12 @@ class _PrivacyPageState extends ConsumerState<PrivacyPage> {
             },
             onPageFinished: (String url) {
               _webViewController
-                  .runJavascript("document.getElementsByTagName('header')[0].style.display='none';"
+                  .runJavaScript("document.getElementsByTagName('header')[0].style.display='none';"
                       "document.getElementsByTagName('footer')[0].style.display='none';")
                   .then((value) => debugPrint('Page finished loading Javascript'))
                   .catchError((onError) => debugPrint('$onError'));
             },
-          ),
+          ),*/
           Align(
             alignment: Alignment.topRight,
             child: IconButton(
