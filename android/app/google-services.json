@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "124120335718",
+    "project_id": "ethio-weather-app",
+    "storage_bucket": "ethio-weather-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124120335718:android:e7b3f604deb5571cd374a7",
+        "android_client_info": {
+          "package_name": "com.ethio.weather"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX7jCG2S9JG_IR_fLJwbPUldVpGhl_aGE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
