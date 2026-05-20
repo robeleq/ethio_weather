@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:basic_utils/basic_utils.dart';
+import 'package:easy_audience_network/ad/banner_ad.dart';
 import 'package:ethio_weather/src/models/daily_forecast.dart';
 import 'package:ethio_weather/src/models/open_weather_map.dart';
 import 'package:ethio_weather/src/widgets/no_internet_connection_card.dart';
@@ -12,6 +15,7 @@ import '../locales/app_localizations.dart';
 import '../providers/providers.dart';
 import '../services/weather_description_locales.dart';
 import '../styles/colors.dart';
+import '../utils/string_constant.dart';
 
 class WeeklyPage extends ConsumerStatefulWidget {
   final String title;
@@ -31,10 +35,10 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
   void initState() {
     super.initState();
 
-    final _oneCallApiWeather = ref.read(oneCallApiWeatherNotifierProvider);
+    final oneCallApiWeather = ref.read(oneCallApiWeatherNotifierProvider);
 
-    if (_oneCallApiWeather.weather != null) {
-      _dailyForecastItems = generateDailyForecastItem(_oneCallApiWeather.weather!);
+    if (oneCallApiWeather.weather != null) {
+      _dailyForecastItems = generateDailyForecastItem(oneCallApiWeather.weather!);
     }
   }
 
@@ -562,18 +566,33 @@ class _WeeklyPageState extends ConsumerState<WeeklyPage> with TickerProviderStat
 
     if (internetConnected) {
       return _dailyForecastItems.isNotEmpty
-          ? SingleChildScrollView(
-              child: ExpansionPanelList(
-                elevation: 3,
-                animationDuration: const Duration(milliseconds: 600),
-                expansionCallback: (index, isExpanded) {
-                  setState(() {
-                    _dailyForecastItems[index].isExpanded = isExpanded;
-                  });
-                },
-                children: _dailyForecastItems.map((hourlyItem) => _buildExpansionPanel(hourlyItem, theme)).toList(),
+          ? Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                    child: ExpansionPanelList(
+                      elevation: 3,
+                      animationDuration: const Duration(milliseconds: 600),
+                      expansionCallback: (index, isExpanded) {
+                        setState(() {
+                          _dailyForecastItems[index].isExpanded = isExpanded;
+                        });
+                      },
+                      children: _dailyForecastItems.map((hourlyItem) => _buildExpansionPanel(hourlyItem, theme)).toList(),
+                    ),
+                  ),
               ),
-            )
+              Container(
+                alignment: Alignment.center,
+                child: BannerAd(
+                  placementId: Platform.isAndroid
+                      ? StringConstant.bannerPlacementID
+                      : "",
+                  bannerSize: BannerSize.STANDARD,
+                ),
+              ),
+            ],
+          )
           : const Center(
               child: CircularProgressIndicator(),
             );

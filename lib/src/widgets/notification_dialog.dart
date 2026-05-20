@@ -1,17 +1,12 @@
-import 'package:ethio_forex/src/models/bank_currency_history.dart';
-import 'package:ethio_forex/src/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
 import '../locales/app_localizations.dart';
-import '../models/bank_currency_forex.dart';
-import '../utils/currency_utils.dart';
 
 class NotificationDialog extends StatelessWidget {
 	final String title;
 	final String body;
-	final BankCurrencyForex bankCurrencyForex;
-	
-	const NotificationDialog({super.key, required this.title, required this.body, required this.bankCurrencyForex});
+
+	const NotificationDialog({super.key, required this.title, required this.body});
 	
 	@override
 	Widget build(BuildContext context) {
@@ -46,6 +41,7 @@ class NotificationDialog extends StatelessWidget {
 			child: ListView(
 					shrinkWrap: true,
 					children: [
+						/*
 						Center(
 							child: Image.asset(
 								'assets/images/banks/${bankCurrencyForex.bankCode?.toString() ?? 'default_bank'}.png',
@@ -71,6 +67,7 @@ class NotificationDialog extends StatelessWidget {
 						  	),
 						  ),
 						),
+						*/
 						const SizedBox(height: 16.0,),
 						Container(
 							padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 8.0),
@@ -78,6 +75,7 @@ class NotificationDialog extends StatelessWidget {
 								crossAxisAlignment: CrossAxisAlignment.start,
 								children: [
 									// 25% width for the currency emoji
+									/*
 									Row(
 										children: [
 											Text(
@@ -89,7 +87,9 @@ class NotificationDialog extends StatelessWidget {
 											const SizedBox(width: 16.0),
 										],
 									),
+									*/
 									// 25% width for the currency code and name
+									/*
 									Expanded(
 										flex: 1, // 25% width
 										child: Column(
@@ -109,6 +109,7 @@ class NotificationDialog extends StatelessWidget {
 											],
 										),
 									),
+									*/
 									const SizedBox(width: 16,),
 									Flexible(
 										child: Column(
@@ -122,10 +123,11 @@ class NotificationDialog extends StatelessWidget {
 															style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
 														),
 														const SizedBox(width: 8.0),
-														Text(
+														/* Text(
 															"${bankCurrencyForex.buying?.toPrecision(2)}",
 															style: const TextStyle(fontSize: 12.0,),
 														),
+														*/
 													],
 												),
 												const SizedBox(height: 10.0),
@@ -137,10 +139,12 @@ class NotificationDialog extends StatelessWidget {
 															style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
 														),
 														const SizedBox(width: 8.0),
+														/*
 														Text(
 															"${bankCurrencyForex.selling?.toPrecision(2)}",
 															style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
 														),
+														*/
 													],
 												),
 											],

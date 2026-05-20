@@ -1,8 +1,10 @@
 import 'package:ethio_weather/src/router.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../locales/app_localizations.dart';
+import '../providers/messaging_provider.dart';
 import '../providers/providers.dart';
 import '../styles/colors.dart';
 
@@ -20,18 +22,37 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
   int _currentIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      ref.read(firebaseMessagingInitializerProvider);
+      ref.read(messagingServiceProvider).handleMessage(context);
+
+      setDeviceToken();
+    });
+  }
+
+  void setDeviceToken() async {
+    final token = await ref.read(messagingServiceProvider).getDeviceToken();
+    if (kDebugMode) {
+      print('FCM token: $token');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final themeProvider = ref.watch(themeChangeNotifierProvider);
-    final _theme = themeProvider.getCurrentTheme();
+    final theme = themeProvider.getCurrentTheme();
 
-    final Color _titleColor = _theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
+    final Color titleColor = theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: _theme.scaffoldBackgroundColor,
+        backgroundColor: theme.scaffoldBackgroundColor,
         title: Text(
           widget.title,
-          style: TextStyle(color: _titleColor),
+          style: TextStyle(color: titleColor),
           textAlign: TextAlign.left,
         ),
       ),
@@ -43,8 +64,8 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        selectedItemColor: _theme.focusColor,
-        unselectedItemColor: _theme.focusColor.withOpacity(.60),
+        selectedItemColor: theme.focusColor,
+        unselectedItemColor: theme.focusColor.withOpacity(.60),
         selectedFontSize: 14,
         unselectedFontSize: 14,
         onTap: _onTap,

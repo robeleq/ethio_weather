@@ -18,4 +18,8 @@ class StringConstant {
       "All the data for Ethio Weather App is provided by One Call API. OpenWeather aggregates and process meteorological data from tens of thousands of weather stations. on-ground radars and satellites to bring you accurate and actionable weather data for any location worldwide.";
 
   static String googlePlayStoreUrl = "https://play.google.com/store/apps/details?id=com.ethio.weather";
+
+  // Facebook ADs
+  static String fbAppID = "1021260499274014";
+  static String bannerPlacementID = "1021260499274014_1021339899266074";
 }

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:basic_utils/basic_utils.dart';
+import 'package:easy_audience_network/ad/banner_ad.dart';
 import 'package:ethio_weather/src/models/open_weather_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +13,7 @@ import '../models/hourly_forecast.dart';
 import '../providers/providers.dart';
 import '../services/weather_description_locales.dart';
 import '../styles/colors.dart';
+import '../utils/string_constant.dart';
 import '../widgets/no_internet_connection_card.dart';
 
 class HourlyPage extends ConsumerStatefulWidget {
@@ -30,10 +34,10 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
   void initState() {
     super.initState();
 
-    final _oneCallApiWeather = ref.read(oneCallApiWeatherNotifierProvider);
+    final oneCallApiWeather = ref.read(oneCallApiWeatherNotifierProvider);
 
-    if (_oneCallApiWeather.weather != null) {
-      _hourlyItems = generateHourlyForecastItem(_oneCallApiWeather.weather!);
+    if (oneCallApiWeather.weather != null) {
+      _hourlyItems = generateHourlyForecastItem(oneCallApiWeather.weather!);
     }
   }
 
@@ -309,8 +313,6 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
 
     final internetConnected = ref.watch(connectionStateProvider);
 
-    final Color _titleColor = theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
-
     final hoursFromNow = DateTime.now().add(const Duration(hours: 11));
     final unixTimestampHoursFromNow = hoursFromNow.toUtc().millisecondsSinceEpoch;
 
@@ -329,7 +331,10 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
 
     if (internetConnected) {
       return _hourlyItems.isNotEmpty
-          ? SingleChildScrollView(
+          ? Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
               child: ExpansionPanelList(
                 elevation: 3,
                 animationDuration: const Duration(milliseconds: 600),
@@ -339,14 +344,27 @@ class _HourlyPageState extends ConsumerState<HourlyPage> with TickerProviderStat
                   });
                 },
                 children: _hourlyItems
-                    .where((hourlyItem) => ((hourlyItem.hourly.dt! * 1000) < unixTimestampHoursFromNow))
+                    .where((hourlyItem) =>
+                ((hourlyItem.hourly.dt! * 1000) < unixTimestampHoursFromNow))
                     .map((hourlyItem) => _buildExpansionPanel(hourlyItem, theme))
                     .toList(),
               ),
-            )
+            ),
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: BannerAd(
+              placementId: Platform.isAndroid
+                  ? StringConstant.bannerPlacementID
+                  : "",
+              bannerSize: BannerSize.STANDARD,
+            ),
+          ),
+        ],
+      )
           : const Center(
-              child: CircularProgressIndicator(),
-            );
+        child: CircularProgressIndicator(),
+      );
     } else {
       return const NoInternetConnection();
     }

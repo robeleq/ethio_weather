@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 
 class ThemeScheme {
-  static const int THEME_LIGHT = 0;
-  static const int THEME_DARK = 1;
+  static const int themeLight = 0;
+  static const int themeDark = 1;
 
   static ThemeData lightTheme() {
     return ThemeData(
@@ -21,7 +21,7 @@ class ThemeScheme {
         inputDecorationTheme:
             const InputDecorationTheme(border: OutlineInputBorder(borderSide: BorderSide(color: lSecondaryLightColor))),
         iconTheme: const IconThemeData(color: lPrimaryDarkColor),
-        cardTheme: const CardTheme(color: lSecondaryLightColor),
+        cardTheme: const CardThemeData(color: lSecondaryLightColor),
         colorScheme: const ColorScheme.light().copyWith(
           surface: lPrimaryBackgroundColor, // Custom background color
         ),
@@ -43,7 +43,7 @@ class ThemeScheme {
       inputDecorationTheme:
           const InputDecorationTheme(border: OutlineInputBorder(borderSide: BorderSide(color: dSecondaryDarkColor))),
       iconTheme: const IconThemeData(color: dPrimaryLightColor),
-      cardTheme: const CardTheme(color: dSecondaryDarkColor),
+      cardTheme: const CardThemeData(color: dSecondaryDarkColor),
       colorScheme: const ColorScheme.dark().copyWith(
         surface: dPrimaryBackgroundColor, // Custom background color
       ),

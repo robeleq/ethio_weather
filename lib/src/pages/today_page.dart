@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:easy_audience_network/easy_audience_network.dart';
+import 'package:ethio_weather/src/utils/string_constant.dart';
 import 'package:ethio_weather/src/widgets/hourly_fromnow_weather_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,18 +24,16 @@ class _TodayPageState extends ConsumerState<TodayPage> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     final themeProvider = ref.watch(themeChangeNotifierProvider);
-    final _theme = themeProvider.getCurrentTheme();
+    final theme = themeProvider.getCurrentTheme();
 
-    final Color _titleColor = _theme.brightness == Brightness.light ? lPrimaryTextColor : dPrimaryTextColor;
+    final internetConnected = ref.watch(connectionStateProvider);
 
-    final _internetConnected = ref.watch(connectionStateProvider);
-
-    final _oneCallApiWeather = ref.watch(oneCallApiWeatherNotifierProvider);
+    final oneCallApiWeather = ref.watch(oneCallApiWeatherNotifierProvider);
 
     // Reload weather data when connection is available
     ref.listen<bool>(connectionStateProvider, (previous, next) {
       if (next) {
-        if (_oneCallApiWeather.weather == null) {
+        if (oneCallApiWeather.weather == null) {
           ref.read(oneCallApiWeatherNotifierProvider).reloadWeather();
         }
       }
@@ -40,25 +42,48 @@ class _TodayPageState extends ConsumerState<TodayPage> with TickerProviderStateM
     final hoursFromNow = DateTime.now().add(const Duration(hours: 4));
     final unixTimestampHoursFromNow = hoursFromNow.toUtc().millisecondsSinceEpoch;
 
-    return _internetConnected
-        ? Stack(children: <Widget>[
-            (_oneCallApiWeather.weather != null)
-                ? SingleChildScrollView(
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 8.0, bottom: 16.0),
-                      child: Column(
-                        children: [
-                          CurrentWeatherCard(
-                              _oneCallApiWeather.weather!.current!, _oneCallApiWeather.weather!.daily![0]),
-                          HourlyFromNowWeatherCard(_oneCallApiWeather.weather!.hourly, unixTimestampHoursFromNow),
-                        ],
+    return internetConnected
+        ? Stack(
+      children: <Widget>[
+        (oneCallApiWeather.weather != null)
+            ? Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  margin: const EdgeInsets.only(top: 8.0, bottom: 16.0),
+                  child: Column(
+                    children: [
+                      CurrentWeatherCard(
+                        oneCallApiWeather.weather!.current!,
+                        oneCallApiWeather.weather!.daily![0],
                       ),
-                    ),
-                  )
-                : const Center(
-                    child: CircularProgressIndicator(),
+                      HourlyFromNowWeatherCard(
+                        oneCallApiWeather.weather!.hourly,
+                        unixTimestampHoursFromNow,
+                      ),
+                    ],
                   ),
-          ])
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: BannerAd(
+                placementId: Platform.isAndroid
+                    ? StringConstant.bannerPlacementID
+                    : "",
+                bannerSize: BannerSize.STANDARD,
+              ),
+            ),
+          ],
+        )
+            : const Center(
+          child: CircularProgressIndicator(),
+        ),
+      ],
+    )
         : const NoInternetConnection();
+
   }
 }

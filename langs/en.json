@@ -16,7 +16,6 @@
     "label_time_format": "Time Format",
     "label_weather_units": "Weather Units",
 
-
     "rain_label_light": "light rain",
     "rain_label_moderate": "moderate rain",
     "rain_label_heavy_intensity": "heavy intensity rain",
@@ -78,6 +77,4 @@
     "atmosphere_label_volcanic_ash": "volcanic ash",
     "atmosphere_label_squalls": "squalls",
     "atmosphere_label_tornado": "tornado"
-
-
 }

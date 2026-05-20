@@ -1,41 +1,39 @@
-import 'package:ethio_weather/src/styles/theme_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ThemeNotifier extends ChangeNotifier {
-  String CURRENT_THEME_ID = "current_theme_id";
+class WeatherNotificationNotifier extends ChangeNotifier {
+  String SHOW_WEATHER_NOTIFICATION = "show_weather_notification";
 
-  ThemeData _themeCurrent = ThemeScheme.lightTheme();
-  ThemeData get theme => _themeCurrent;
+  bool _showWeatherNotification = false;
+  bool get showWeatherNotification => _showWeatherNotification;
 
-  getCurrentTheme() => _themeCurrent;
+  getShowWeatherNotification() => _showWeatherNotification;
 
-  ThemeNotifier() {
-    _getCurrentTheme();
+  WeatherNotificationNotifier() {
+    _getShowWeatherNotification();
   }
 
-  void setTheme(ThemeData theme) {
-    _themeCurrent = theme;
-    _saveThemeToSharedPref(theme);
+  void setShowWeatherNotification(bool isShowWeatherNotification) {
+    _showWeatherNotification = isShowWeatherNotification;
+    _saveWeatherNotificationToSharedPref(isShowWeatherNotification);
     notifyListeners();
   }
 
-  _getCurrentTheme() async {
-    int currentThemeId = await _getThemeFromSharedPref();
-    _themeCurrent = (currentThemeId == 0) ? ThemeScheme.lightTheme() : ThemeScheme.darkTheme();
+  _getShowWeatherNotification() async {
+    bool isShowWeatherNotification = await _getWeatherNotificationFromSharedPref();
+    _showWeatherNotification = isShowWeatherNotification;
     notifyListeners();
   }
 
-  Future<int> _getThemeFromSharedPref() async {
+  Future<bool> _getWeatherNotificationFromSharedPref() async {
     final pref = await SharedPreferences.getInstance();
-    final currentThemeId = pref.getInt(CURRENT_THEME_ID);
-    if (currentThemeId == null) return 0;
-    return currentThemeId;
+    final isShowWeatherNotification = pref.getBool(SHOW_WEATHER_NOTIFICATION);
+    if (isShowWeatherNotification == null) return false;
+    return isShowWeatherNotification;
   }
 
-  void _saveThemeToSharedPref(ThemeData theme) async {
+  void _saveWeatherNotificationToSharedPref(bool isShowWeatherNotification) async {
     final pref = await SharedPreferences.getInstance();
-    int themeId = (theme.brightness == Brightness.light) ? ThemeScheme.THEME_LIGHT : ThemeScheme.THEME_DARK;
-    await pref.setInt(CURRENT_THEME_ID, themeId);
+    await pref.setBool(SHOW_WEATHER_NOTIFICATION, isShowWeatherNotification);
   }
 }

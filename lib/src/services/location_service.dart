@@ -35,9 +35,9 @@ class LocationService {
     }
 
     // Permissions are granted and access the position of the device.
-    Position _position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-    return LatLong(_position.latitude, _position.longitude);
+    return LatLong(position.latitude, position.longitude);
   }
 
   Future<String> getAddressFromLatLong(LatLong position) async {
@@ -48,11 +48,11 @@ class LocationService {
   }
 
   Future<UserLocation> getUserLocation(bool hasInternetConnection) async {
-    LatLong _latLong = await getUserCurrentLocation();
+    LatLong latLong = await getUserCurrentLocation();
     if (hasInternetConnection) {
-      String _address = await getAddressFromLatLong(_latLong);
-      return UserLocation(_latLong, _address);
+      String address = await getAddressFromLatLong(latLong);
+      return UserLocation(latLong, address);
     }
-    return UserLocation(_latLong, "Unknown Address");
+    return UserLocation(latLong, "Unknown Address");
   }
 }

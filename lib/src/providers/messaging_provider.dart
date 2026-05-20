@@ -6,7 +6,7 @@ import 'firebase_provider.dart';
 
 final messagingServiceProvider = Provider<FirebaseMessagingService>((ref) {
 	final messaging = ref.read(firebaseMessagingProvider);
-	return FirebaseMessagingService(messaging);
+	return FirebaseMessagingService(ref, messaging);
 });
 
 final firebaseMessagingInitializerProvider = Provider((ref) {

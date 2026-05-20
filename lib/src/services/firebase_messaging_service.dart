@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:ethio_forex/src/models/bank_currency_forex.dart';
+import 'package:ethio_weather/src/providers/providers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +9,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/notification_message.dart';
 import '../widgets/notification_dialog.dart';
-import 'local_notification_service.dart';
 
 class FirebaseMessagingService {
+  final Ref ref;
   final FirebaseMessaging _fcm;
 
-  FirebaseMessagingService(this._fcm);
+  FirebaseMessagingService(this.ref, this._fcm);
 
   Future<void> initMessaging() async {
 
@@ -67,16 +67,18 @@ class FirebaseMessagingService {
             payload: jsonEncode(message.data),
           );
 
-          if(!context.mounted) return;
+          if (!context.mounted) return;
 
-          showDialog(
-            context: context,
-            builder: (context) => NotificationDialog(
-              title: pushMessage.title,
-              body: pushMessage.body,
-              bankCurrencyForex: BankCurrencyForex.fromJson(message.data),
-            ),
-          );
+          if (message.data.isNotEmpty) {
+            showDialog(
+              context: context,
+              builder: (context) =>
+                  NotificationDialog(
+                    title: pushMessage.title,
+                    body: pushMessage.body,
+                  ),
+            );
+          }
         }
       }
     });
@@ -90,7 +92,9 @@ class FirebaseMessagingService {
       AndroidNotification? android = message.notification?.android;
 
       if (android != null) {
-        LocalNotificationService.showNotificationForeground(
+        final localNotificationService = ref.read(localNotificationServiceProvider);
+
+        localNotificationService.showNotificationForeground(
           context,
           id: notification.hashCode,
           title: notification.title,
@@ -107,14 +111,15 @@ class FirebaseMessagingService {
 
         if(!context.mounted) return;
 
-        showDialog(
-          context: context,
-          builder: (context) => NotificationDialog(
+        if(message.data.isNotEmpty) {
+          showDialog(
+            context: context,
+            builder: (context) => NotificationDialog(
               title: pushMessage.title,
               body: pushMessage.body,
-              bankCurrencyForex: BankCurrencyForex.fromJson(message.data),
-          ),
-        );
+            ),
+          );
+        }
       }
     });
 
@@ -135,14 +140,16 @@ class FirebaseMessagingService {
 
         if(!context.mounted) return;
 
-        showDialog(
-          context: context,
-          builder: (context) => NotificationDialog(
-            title: pushMessage.title,
-            body: pushMessage.body,
-            bankCurrencyForex: BankCurrencyForex.fromJson(message.data),
-          ),
-        );
+        if(message.data.isNotEmpty) {
+          showDialog(
+            context: context,
+            builder: (context) =>
+                NotificationDialog(
+                  title: pushMessage.title,
+                  body: pushMessage.body,
+                ),
+          );
+        }
 
         /*showDialog(
           context: context,
